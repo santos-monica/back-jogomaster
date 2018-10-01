@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9d194bfce80848afa52e04c24c3ad63e" Name="Diagram1">
+        <EntityTypeShape EntityType="JogoMasterModel.Administrador" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JogoMasterModel.Classificacao" Width="1.5" PointX="2.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="JogoMasterModel.Nivel" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JogoMasterModel.Pergunta" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="JogoMasterModel.Resposta" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JogoMasterModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JogoMasterModel.Tema" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JogoMasterModel.Usuario" Width="1.5" PointX="5" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="JogoMasterModel.FK__Usuario__IdClass__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="JogoMasterModel.FK__Pergunta__IdNive__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="JogoMasterModel.FK__Pergunta__IdTema__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="JogoMasterModel.FK__Resposta__IdPerg__797309D9" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
