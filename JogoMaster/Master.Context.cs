@@ -13,10 +13,10 @@ namespace JogoMaster
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class JogoMasterEntities1 : DbContext
+    public partial class JogoMasterEntities : DbContext
     {
-        public JogoMasterEntities1()
-            : base("name=JogoMasterEntities1")
+        public JogoMasterEntities()
+            : base("name=JogoMasterEntities")
         {
         }
     
@@ -25,13 +25,12 @@ namespace JogoMaster
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Administrador> Administrador { get; set; }
-        public virtual DbSet<Classificacao> Classificacao { get; set; }
-        public virtual DbSet<Nivel> Nivel { get; set; }
-        public virtual DbSet<Pergunta> Pergunta { get; set; }
-        public virtual DbSet<Resposta> Resposta { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<Tema> Tema { get; set; }
-        public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Administrador> Administradores { get; set; }
+        public virtual DbSet<Classificacao> Classificacoes { get; set; }
+        public virtual DbSet<Nivel> Niveis { get; set; }
+        public virtual DbSet<Pergunta> Perguntas { get; set; }
+        public virtual DbSet<Resposta> Respostas { get; set; }
+        public virtual DbSet<Tema> Temas { get; set; }
+        public virtual DbSet<Usuario> Usuarios { get; set; }
     }
 }
