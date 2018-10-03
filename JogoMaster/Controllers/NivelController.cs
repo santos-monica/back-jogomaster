@@ -5,66 +5,60 @@ using System.Web.Http;
 
 namespace JogoMaster.Controllers
 {
-    public partial class UsuarioController
+    public partial class NivelController
     {
         private JogoMasterEntities ctx;
 
         public IHttpActionResult Get()
         {
-            IList<ViewUsuario> usuarios = null;
+            IList<ViewNivel> niveis = null;
 
             using (ctx = new JogoMasterEntities())
             {
-                usuarios = ctx.Usuarios.Select(s => new ViewUsuario()
+                niveis = ctx.Niveis.Select(s => new ViewNivel()
                 {
                     Id = s.Id,
-                    Nome = s.Nome,
-                    Email = s.Email,
-                    Senha = s.Senha,
+                    Nivel = s.Nivel1,
                     Pontos = s.Pontos
                 }).ToList();
             }
 
-            if (usuarios.Count == 0) return NotFound(); 
+            if (niveis.Count == 0) return NotFound();
 
-            return Ok(usuarios);
+            return Ok(niveis);
         }
 
         public IHttpActionResult Get(int id)
         {
-            ViewUsuario usuario = null;
+            ViewNivel nivel = null;
 
             using (ctx = new JogoMasterEntities())
             {
-                usuario = ctx.Usuarios.Where(x => x.Id == id).Select(s => new ViewUsuario()
+                nivel = ctx.Niveis.Where(x => x.Id == id).Select(s => new ViewNivel()
                 {
                     Id = s.Id,
-                    Nome = s.Nome,
-                    Email = s.Email,
-                    Senha = s.Senha,
+                    Nivel = s.Nivel1,
                     Pontos = s.Pontos
                 }).FirstOrDefault();
             }
 
-            if (usuario == null) return NotFound();
+            if (nivel == null) return NotFound();
 
-            return Ok(usuario);
+            return Ok(nivel);
         }
 
-        public IHttpActionResult Post(ViewUsuario dados)
+        public IHttpActionResult Post(ViewNivel dados)
         {
-            if (dados == null)
-                return BadRequest("Dados inválidos.");
+            if (dados == null) return BadRequest("Dados inválidos.");
+
+            ValidaNivel(dados);
 
             using (ctx = new JogoMasterEntities())
             {
-                ctx.Usuarios.Add(new Usuario()
+                ctx.Niveis.Add(new Nivel()
                 {
-                    Nome = dados.Nome,
-                    Email = dados.Email,
-                    Senha = dados.Senha,
+                    Nivel1 = dados.Nivel,
                     Pontos = dados.Pontos,
-                    IdClassificacao = dados.IdClassificacao
                 });
 
                 ctx.SaveChanges();
@@ -73,23 +67,20 @@ namespace JogoMaster.Controllers
             return Ok();
         }
 
-        public IHttpActionResult Put(ViewUsuario usuario)
+        public IHttpActionResult Put(ViewNivel dados)
         {
-            if (usuario == null)
+            if (dados == null)
                 return BadRequest("Dados inválidos.");
 
             using (ctx = new JogoMasterEntities())
             {
-                var UsuarioAtual = ctx.Usuarios.Where(t => t.Id == usuario.Id)
-                                                        .FirstOrDefault<Usuario>();
+                var NivelAtual = ctx.Niveis.Where(t => t.Id == dados.Id)
+                                                        .FirstOrDefault<Nivel>();
 
-                if (UsuarioAtual != null)
+                if (NivelAtual != null)
                 {
-                    UsuarioAtual.Nome = usuario.Nome;
-                    UsuarioAtual.Email = usuario.Email;
-                    UsuarioAtual.Senha = usuario.Senha;
-                    UsuarioAtual.Pontos = usuario.Pontos;
-                    UsuarioAtual.IdClassificacao = usuario.IdClassificacao;
+                    NivelAtual.Nivel1 = dados.Nivel;
+                    NivelAtual.Pontos = dados.Pontos;
                     ctx.SaveChanges();
                 }
                 else
@@ -108,7 +99,7 @@ namespace JogoMaster.Controllers
 
             using (ctx = new JogoMasterEntities())
             {
-                var usuario = ctx.Usuarios
+                var usuario = ctx.Niveis
                     .Where(x => x.Id == id)
                     .FirstOrDefault();
 

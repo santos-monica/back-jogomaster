@@ -5,15 +5,15 @@ using System.Web.Http;
 
 namespace JogoMaster.Controllers
 {
-    public class TemaController : ApiController
+    public partial class TemaController
     {
-        private JogoMasterEntities ctx = new JogoMasterEntities();
+        private JogoMasterEntities ctx;
 
         public IHttpActionResult Get()
         {
             IList<ViewTema> temas = null;
 
-            using (ctx)
+            using (ctx = new JogoMasterEntities())
             {
                 temas = ctx.Temas.Select(s => new ViewTema()
                 {
@@ -22,7 +22,7 @@ namespace JogoMaster.Controllers
                 }).ToList();
             }
 
-            if (temas.Count == 0) return NotFound(); 
+            if (temas.Count == 0) return NotFound();
 
             return Ok(temas);
         }
@@ -31,7 +31,7 @@ namespace JogoMaster.Controllers
         {
             ViewTema tema = null;
 
-            using (ctx)
+            using (ctx = new JogoMasterEntities())
             {
                 tema = ctx.Temas.Where(t => t.Id == id).Select(t => new ViewTema()
                 {
@@ -45,37 +45,37 @@ namespace JogoMaster.Controllers
             return Ok(tema);
         }
 
-        public IHttpActionResult Post(ViewTema tema)
+        public IHttpActionResult Post(ViewTema dados)
         {
-            if (tema == null)
-                return BadRequest("Dados inválidos.");
+            if (dados == null) return BadRequest("Dados inválidos.");
 
-            using (ctx)
+            ValidaTema(dados);
+            
+            using (ctx = new JogoMasterEntities())
             {
                 ctx.Temas.Add(new Tema()
                 {
-                    Tema1 = tema.Tema
+                    Tema1 = dados.Tema
                 });
 
                 ctx.SaveChanges();
             }
 
-            return Ok();
+            return Ok(dados);
         }
 
-        public IHttpActionResult Put(ViewTema tema)
+        public IHttpActionResult Put(ViewTema dados)
         {
-            if (tema == null)
-                return BadRequest("Dados inválidos.");
+            if (dados == null) return BadRequest("Dados inválidos.");
 
-            using (ctx)
+            using (ctx = new JogoMasterEntities())
             {
-                var TemaAtual = ctx.Temas.Where(t => t.Id == tema.Id)
+                var TemaAtual = ctx.Temas.Where(t => t.Id == dados.Id)
                                                         .FirstOrDefault<Tema>();
 
                 if (TemaAtual != null)
                 {
-                    TemaAtual.Tema1 = tema.Tema;
+                    TemaAtual.Tema1 = dados.Tema;
                     ctx.SaveChanges();
                 }
                 else
@@ -90,16 +90,18 @@ namespace JogoMaster.Controllers
         public IHttpActionResult Delete(int id)
         {
             if (id <= 0)
+            {
                 return BadRequest("ID inválido.");
+            }
 
-            using (ctx)
+            using (ctx = new JogoMasterEntities())
             {
                 var tema = ctx.Temas
                     .Where(t => t.Id == id)
                     .FirstOrDefault();
 
                 if (tema == null) return BadRequest("ID inválido");
-
+                
                 ctx.Entry(tema).State = System.Data.Entity.EntityState.Deleted;
                 ctx.SaveChanges();
             }

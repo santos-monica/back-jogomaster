@@ -1,6 +1,9 @@
-use master 
+use master
+go
 create database JogoMaster
+go
 use JogoMaster
+go
 create table Nivel (
 	Id int not null primary key identity(1, 1),
 	Nivel varchar(10) not null,
@@ -50,7 +53,6 @@ create table Administrador (
 	Senha varchar(200) not null,
 )
 
-
 insert into Administrador values ('Admin', 'adm@adm.com', 'admin')
 insert into Classificacao values
 ('Iniciante', 0, 1000),
@@ -64,6 +66,6 @@ insert into Tema values
 insert into Nivel values
 ('Fácil', 5), ('Médio', 15), ('Difícil', 30)
 insert into Pergunta values
-(5, 2, 'Qual destes sabores não são da Coca-Cola?', 1)
+('Qual destes sabores não são da Coca-Cola?', 1, 5, 2)
 insert into Resposta values 
-(1, 1, 'Grape'),(0, 1, 'Vanilla'),(0, 1, 'Cherry'),(0, 1, 'Lemon')
+(1, 'Grape', 1),(0, 'Vanilla', 1),(0, 'Cherry', 1),(0, 'Lemon', 1)

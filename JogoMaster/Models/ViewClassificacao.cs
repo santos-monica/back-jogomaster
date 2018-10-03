@@ -7,5 +7,9 @@ namespace JogoMaster.Models
 {
     public class ViewClassificacao
     {
+        public int Id { get; set; }
+        public string Classificacao { get; set; }
+        public int PontuacaoMinima { get; set; }
+        public int PontuacaoMaxima { get; set; }
     }
-}
+}   

@@ -199,8 +199,36 @@
     <Compile Include="Classificacao.cs">
       <DependentUpon>Master.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AdministradorController.cs" />
+    <Compile Include="Controllers\AdministradorValidacao.cs">
+      <DependentUpon>AdministradorController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\ClassificacaoController.cs" />
+    <Compile Include="Controllers\ClassificacaoValidacao.cs">
+      <DependentUpon>ClassificacaoController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\LoginAdminController.cs" />
+    <Compile Include="Controllers\NivelController.cs" />
+    <Compile Include="Controllers\NivelValidacao.cs">
+      <DependentUpon>NivelController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\PerguntaController.cs" />
+    <Compile Include="Controllers\PerguntaValidacao.cs">
+      <DependentUpon>PerguntaController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\RespostaController.cs" />
+    <Compile Include="Controllers\RespostaValidacao.cs">
+      <DependentUpon>RespostaController.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\TemaController.cs" />
+    <Compile Include="Controllers\TemaValidacao.cs">
+      <DependentUpon>TemaController.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\UsuarioValidacao.cs">
+      <DependentUpon>UsuarioController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Validacao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
