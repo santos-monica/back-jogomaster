@@ -9,6 +9,5 @@ namespace JogoMaster.Models
     {
         public int Id { get; set; }
         public string Nivel { get; set; }
-        public byte Pontos { get; set; }
     }
 }

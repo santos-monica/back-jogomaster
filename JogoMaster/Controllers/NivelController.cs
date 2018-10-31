@@ -18,8 +18,7 @@ namespace JogoMaster.Controllers
                 niveis = ctx.Niveis.Select(s => new ViewNivel()
                 {
                     Id = s.Id,
-                    Nivel = s.Nivel1,
-                    Pontos = s.Pontos
+                    Nivel = s.Nivel1
                 }).ToList();
             }
 
@@ -37,8 +36,7 @@ namespace JogoMaster.Controllers
                 nivel = ctx.Niveis.Where(x => x.Id == id).Select(s => new ViewNivel()
                 {
                     Id = s.Id,
-                    Nivel = s.Nivel1,
-                    Pontos = s.Pontos
+                    Nivel = s.Nivel1
                 }).FirstOrDefault();
             }
 
@@ -57,8 +55,7 @@ namespace JogoMaster.Controllers
             {
                 ctx.Niveis.Add(new Nivel()
                 {
-                    Nivel1 = dados.Nivel,
-                    Pontos = dados.Pontos,
+                    Nivel1 = dados.Nivel
                 });
 
                 ctx.SaveChanges();
@@ -80,7 +77,6 @@ namespace JogoMaster.Controllers
                 if (NivelAtual != null)
                 {
                     NivelAtual.Nivel1 = dados.Nivel;
-                    NivelAtual.Pontos = dados.Pontos;
                     ctx.SaveChanges();
                 }
                 else
