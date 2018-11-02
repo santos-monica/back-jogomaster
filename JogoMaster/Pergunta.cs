@@ -21,10 +21,10 @@ namespace JogoMaster
         }
     
         public int Id { get; set; }
-        public string Pergunta1 { get; set; }
-        public bool Patrocinada { get; set; }
         public int IdTema { get; set; }
         public int IdNivel { get; set; }
+        public string Pergunta1 { get; set; }
+        public bool Patrocinada { get; set; }
     
         public virtual Nivel Nivel { get; set; }
         public virtual Tema Tema { get; set; }

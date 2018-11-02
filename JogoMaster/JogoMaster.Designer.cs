@@ -1,4 +1,8 @@
+<<<<<<< HEAD:JogoMaster/JogoMaster.Designer.cs
 ﻿// T4 code generation is enabled for model 'C:\Users\monica.santos\source\repos\back-jogomaster\JogoMaster\JogoMaster.edmx'. 
+=======
+﻿// T4 code generation is enabled for model 'D:\source\repos\back-jogomaster (2)\back-jogomaster\JogoMaster\Master.edmx'. 
+>>>>>>> 7897204... Ajustes:JogoMaster/Master.Designer.cs
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

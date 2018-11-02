@@ -75,6 +75,19 @@ namespace JogoMaster.Controllers
                 {
                     return NotFound();
                 }
+<<<<<<< HEAD
+
+                respostas = ctx.Respostas
+                .Where(s => s.IdPergunta == pergunta.Id)
+                .Select(s => new ViewResposta()
+                {
+                    Id = s.Id,
+                    Correta = s.Correta,
+                    Resposta = s.Resposta1,
+                    IdPergunta = s.IdPergunta
+                })
+                .ToList();
+=======
 
                 respostas = ctx.Respostas
                 .Where(s => s.IdPergunta == pergunta.Id)
@@ -94,6 +107,54 @@ namespace JogoMaster.Controllers
                 };
             }
 
+            return Ok(retorno);
+        }
+
+        public IHttpActionResult Post(ViewPerguntaRespota dados)
+        {
+            if (dados == null)
+            {
+                return BadRequest("Dados inválidos.");
+            }
+
+            ValidaPergunta(dados.pergunta);
+            ValidaResposta(dados.respostas);
+            var pergunta_add = new Pergunta
+            {
+                Pergunta1 = dados.pergunta.Pergunta,
+                Patrocinada = dados.pergunta.Patrocinada,
+                IdTema = dados.pergunta.IdTema,
+                IdNivel = dados.pergunta.IdNivel
+            };
+
+            using (ctx = new JogoMasterEntities())
+            {
+                ctx.Perguntas.Add(pergunta_add);
+                ctx.SaveChanges();
+            }
+            dados.respostas.ForEach(res => res.IdPergunta = pergunta_add.Id);
+
+            using (ctx = new JogoMasterEntities())
+            {
+                dados.respostas.ForEach(res =>
+                {
+                    ctx.Respostas.Add(new Resposta()
+                    {
+                        Correta = res.Correta,
+                        IdPergunta = pergunta_add.Id,
+                        Resposta1 = res.Resposta,
+                    });
+                });
+>>>>>>> 7897204... Ajustes
+
+                retorno = new ViewPerguntaRespota
+                {
+                    pergunta = pergunta,
+                    respostas = respostas
+                };
+            }
+
+<<<<<<< HEAD
             return Ok(retorno);
         }
 
@@ -162,6 +223,35 @@ namespace JogoMaster.Controllers
                     ctx.Entry(res).State = System.Data.Entity.EntityState.Deleted;
                 });
 
+=======
+            return Ok("Pergunta cadastrada com sucesso!");
+        }
+
+        public IHttpActionResult Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("ID inválido.");
+            }
+
+            List<Resposta> resposta = new List<Resposta>();
+            using (ctx = new JogoMasterEntities())
+            {
+                resposta = ctx.Respostas
+                    .Where(x => x.IdPergunta == id)
+                    .ToList();
+
+                //ctx.SaveChanges();
+
+                if (resposta == null) { return BadRequest("ID inválido"); }
+
+                resposta.ForEach(res =>
+                {
+                    ctx.Entry(res).State = System.Data.Entity.EntityState.Deleted;
+                    //ctx.SaveChanges();
+                });
+
+>>>>>>> 7897204... Ajustes
                 var pergunta = ctx.Perguntas
                     .Where(x => x.Id == id)
                     .FirstOrDefault();
