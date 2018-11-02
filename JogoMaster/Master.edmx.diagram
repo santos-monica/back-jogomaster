@@ -4,18 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f47810bb322e4770a1755d6bea4e688c" Name="Diagram1">
+      <Diagram DiagramId="159ae0f48ffc4521afc1731504c12c72" Name="Diagram1">
         <EntityTypeShape EntityType="JogoMasterModel.Administrador" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="JogoMasterModel.Classificacao" Width="1.5" PointX="2.75" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="JogoMasterModel.Nivel" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="JogoMasterModel.Pergunta" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="JogoMasterModel.Resposta" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="JogoMasterModel.Tema" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JogoMasterModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JogoMasterModel.Tema" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="JogoMasterModel.Usuario" Width="1.5" PointX="5" PointY="5" IsExpanded="true" />
-        <AssociationConnector Association="JogoMasterModel.FK__Usuario__IdClass__31EC6D26" ManuallyRouted="false" />
-        <AssociationConnector Association="JogoMasterModel.FK__Pergunta__IdNive__29572725" ManuallyRouted="false" />
-        <AssociationConnector Association="JogoMasterModel.FK__Pergunta__IdTema__286302EC" ManuallyRouted="false" />
-        <AssociationConnector Association="JogoMasterModel.FK__Resposta__IdPerg__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="JogoMasterModel.FK__Usuario__IdClass__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="JogoMasterModel.FK__Pergunta__IdNive__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="JogoMasterModel.FK__Pergunta__IdTema__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="JogoMasterModel.FK__Resposta__IdPerg__797309D9" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

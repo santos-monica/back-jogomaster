@@ -1,4 +1,5 @@
 ﻿using JogoMaster.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JogoMaster.Controllers
@@ -29,6 +30,13 @@ namespace JogoMaster.Controllers
                     .FirstOrDefault();
                 Refute(pergunta != null, "Pergunta já cadastrada.");
             }
+        }
+
+        private void ValidaResposta(List<ViewResposta> dados)
+        {
+            var certas = dados.Count(res => res.Correta == true);
+            Refute(certas != 1, "Somente uma resposta deve ser a correta.");
+            dados.ForEach(res => { Refute(string.IsNullOrEmpty(res.Resposta), "Informe a Resposta."); });
         }
     }
 }

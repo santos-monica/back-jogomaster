@@ -36,6 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>C:\Users\monic\AppData\Local\Temp\vs2C39.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,6 +46,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>C:\Users\monic\AppData\Local\Temp\vs2C39.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -251,6 +253,7 @@
     <Compile Include="Models\ViewClassificacao.cs" />
     <Compile Include="Models\ViewNivel.cs" />
     <Compile Include="Models\ViewPergunta.cs" />
+    <Compile Include="Models\ViewPerguntaRespota.cs" />
     <Compile Include="Models\ViewResposta.cs" />
     <Compile Include="Models\ViewTema.cs" />
     <Compile Include="Models\ViewUsuario.cs" />
@@ -262,6 +265,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resposta.cs">
+      <DependentUpon>Master.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
       <DependentUpon>Master.tt</DependentUpon>
     </Compile>
     <Compile Include="Tema.cs">

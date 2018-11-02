@@ -22,6 +22,8 @@ namespace JogoMaster
     
         public int Id { get; set; }
         public string Tema1 { get; set; }
+        public string Icone { get; set; }
+        public string Cor { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pergunta> Pergunta { get; set; }

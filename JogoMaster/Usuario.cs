@@ -20,6 +20,7 @@ namespace JogoMaster
         public string Senha { get; set; }
         public int Pontos { get; set; }
         public int IdClassificacao { get; set; }
+        public string Username { get; set; }
     
         public virtual Classificacao Classificacao { get; set; }
     }

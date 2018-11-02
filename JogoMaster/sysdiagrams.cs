@@ -12,13 +12,12 @@ namespace JogoMaster
     using System;
     using System.Collections.Generic;
     
-    public partial class Resposta
+    public partial class sysdiagrams
     {
-        public int Id { get; set; }
-        public bool Correta { get; set; }
-        public int IdPergunta { get; set; }
-        public string Resposta1 { get; set; }
-    
-        public virtual Pergunta Pergunta { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

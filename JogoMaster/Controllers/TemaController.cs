@@ -18,7 +18,9 @@ namespace JogoMaster.Controllers
                 temas = ctx.Temas.Select(s => new ViewTema()
                 {
                     Id = s.Id,
-                    Tema = s.Tema1
+                    Tema = s.Tema1,
+                    Icone = s.Icone,
+                    Cor = s.Cor
                 }).ToList();
             }
 
@@ -36,7 +38,9 @@ namespace JogoMaster.Controllers
                 tema = ctx.Temas.Where(t => t.Id == id).Select(t => new ViewTema()
                 {
                     Id = t.Id,
-                    Tema = t.Tema1
+                    Tema = t.Tema1,
+                    Icone = t.Icone,
+                    Cor = t.Cor
                 }).FirstOrDefault();
             }
 
@@ -50,12 +54,14 @@ namespace JogoMaster.Controllers
             if (dados == null) return BadRequest("Dados inválidos.");
 
             ValidaTema(dados);
-            
+
             using (ctx = new JogoMasterEntities())
             {
                 ctx.Temas.Add(new Tema()
                 {
-                    Tema1 = dados.Tema
+                    Tema1 = dados.Tema,
+                    Icone = dados.Icone,
+                    Cor = dados.Cor
                 });
 
                 ctx.SaveChanges();
@@ -76,6 +82,8 @@ namespace JogoMaster.Controllers
                 if (TemaAtual != null)
                 {
                     TemaAtual.Tema1 = dados.Tema;
+                    TemaAtual.Icone = dados.Icone;
+                    TemaAtual.Cor = dados.Cor;
                     ctx.SaveChanges();
                 }
                 else

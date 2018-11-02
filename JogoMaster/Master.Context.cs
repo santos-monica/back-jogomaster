@@ -30,6 +30,7 @@ namespace JogoMaster
         public virtual DbSet<Nivel> Niveis { get; set; }
         public virtual DbSet<Pergunta> Perguntas { get; set; }
         public virtual DbSet<Resposta> Respostas { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tema> Temas { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
     }

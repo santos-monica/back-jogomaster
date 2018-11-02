@@ -9,5 +9,7 @@ namespace JogoMaster.Models
     {
         public int Id { get; set; }
         public string Tema { get; set; }
+        public string Icone { get; set; }
+        public string Cor { get; set; }
     }
 }
