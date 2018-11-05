@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="JogoMasterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="JogoMasterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrador">
           <Key>
             <PropertyRef Name="Id" />
@@ -35,10 +35,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdTema" Type="int" Nullable="false" />
-          <Property Name="IdNivel" Type="int" Nullable="false" />
           <Property Name="Pergunta" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Patrocinada" Type="bit" Nullable="false" />
+          <Property Name="IdTema" Type="int" Nullable="false" />
+          <Property Name="IdNivel" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Resposta">
           <Key>
@@ -46,8 +46,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Correta" Type="bit" Nullable="false" />
-          <Property Name="IdPergunta" Type="int" Nullable="false" />
           <Property Name="Resposta" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdPergunta" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -65,8 +65,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Tema" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Icone" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Cor" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Icone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Cor" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -74,13 +74,13 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nome" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="Username" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Senha" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Pontos" Type="int" Nullable="false" />
           <Property Name="IdClassificacao" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Pergunta__IdNive__6C190EBB">
+        <Association Name="FK__Pergunta__IdNive__29572725">
           <End Role="Nivel" Type="Self.Nivel" Multiplicity="1" />
           <End Role="Pergunta" Type="Self.Pergunta" Multiplicity="*" />
           <ReferentialConstraint>
@@ -92,7 +92,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pergunta__IdTema__6B24EA82">
+        <Association Name="FK__Pergunta__IdTema__286302EC">
           <End Role="Tema" Type="Self.Tema" Multiplicity="1" />
           <End Role="Pergunta" Type="Self.Pergunta" Multiplicity="*" />
           <ReferentialConstraint>
@@ -104,7 +104,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Resposta__IdPerg__797309D9">
+        <Association Name="FK__Resposta__IdPerg__2C3393D0">
           <End Role="Pergunta" Type="Self.Pergunta" Multiplicity="1" />
           <End Role="Resposta" Type="Self.Resposta" Multiplicity="*" />
           <ReferentialConstraint>
@@ -116,7 +116,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Usuario__IdClass__05D8E0BE">
+        <Association Name="FK__Usuario__IdClass__31EC6D26">
           <End Role="Classificacao" Type="Self.Classificacao" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -137,24 +137,25 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tema" EntityType="Self.Tema" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Pergunta__IdNive__6C190EBB" Association="Self.FK__Pergunta__IdNive__6C190EBB">
+          <AssociationSet Name="FK__Pergunta__IdNive__29572725" Association="Self.FK__Pergunta__IdNive__29572725">
             <End Role="Nivel" EntitySet="Nivel" />
             <End Role="Pergunta" EntitySet="Pergunta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pergunta__IdTema__6B24EA82" Association="Self.FK__Pergunta__IdTema__6B24EA82">
+          <AssociationSet Name="FK__Pergunta__IdTema__286302EC" Association="Self.FK__Pergunta__IdTema__286302EC">
             <End Role="Tema" EntitySet="Tema" />
             <End Role="Pergunta" EntitySet="Pergunta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Resposta__IdPerg__797309D9" Association="Self.FK__Resposta__IdPerg__797309D9">
+          <AssociationSet Name="FK__Resposta__IdPerg__2C3393D0" Association="Self.FK__Resposta__IdPerg__2C3393D0">
             <End Role="Pergunta" EntitySet="Pergunta" />
             <End Role="Resposta" EntitySet="Resposta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Usuario__IdClass__05D8E0BE" Association="Self.FK__Usuario__IdClass__05D8E0BE">
+          <AssociationSet Name="FK__Usuario__IdClass__31EC6D26" Association="Self.FK__Usuario__IdClass__31EC6D26">
             <End Role="Classificacao" EntitySet="Classificacao" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JogoMasterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -175,7 +176,7 @@
           <Property Name="Classificacao1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PontuacaoMinima" Type="Int32" Nullable="false" />
           <Property Name="PontuacaoMaxima" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__IdClass__74AE54BC" FromRole="Classificacao" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__IdClass__31EC6D26" FromRole="Classificacao" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Nivel">
           <Key>
@@ -183,20 +184,20 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nivel1" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Pergunta" Relationship="Self.FK__Pergunta__IdNive__6C190EBB" FromRole="Nivel" ToRole="Pergunta" />
+          <NavigationProperty Name="Pergunta" Relationship="Self.FK__Pergunta__IdNive__29572725" FromRole="Nivel" ToRole="Pergunta" />
         </EntityType>
         <EntityType Name="Pergunta">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdTema" Type="Int32" Nullable="false" />
-          <Property Name="IdNivel" Type="Int32" Nullable="false" />
           <Property Name="Pergunta1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Patrocinada" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Nivel" Relationship="Self.FK__Pergunta__IdNive__6C190EBB" FromRole="Pergunta" ToRole="Nivel" />
-          <NavigationProperty Name="Tema" Relationship="Self.FK__Pergunta__IdTema__6B24EA82" FromRole="Pergunta" ToRole="Tema" />
-          <NavigationProperty Name="Resposta" Relationship="Self.FK__Resposta__IdPerg__797309D9" FromRole="Pergunta" ToRole="Resposta" />
+          <Property Name="IdTema" Type="Int32" Nullable="false" />
+          <Property Name="IdNivel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Nivel" Relationship="Self.FK__Pergunta__IdNive__29572725" FromRole="Pergunta" ToRole="Nivel" />
+          <NavigationProperty Name="Tema" Relationship="Self.FK__Pergunta__IdTema__286302EC" FromRole="Pergunta" ToRole="Tema" />
+          <NavigationProperty Name="Resposta" Relationship="Self.FK__Resposta__IdPerg__2C3393D0" FromRole="Pergunta" ToRole="Resposta" />
         </EntityType>
         <EntityType Name="Resposta">
           <Key>
@@ -204,9 +205,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Correta" Type="Boolean" Nullable="false" />
-          <Property Name="IdPergunta" Type="Int32" Nullable="false" />
           <Property Name="Resposta1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Pergunta" Relationship="Self.FK__Resposta__IdPerg__797309D9" FromRole="Resposta" ToRole="Pergunta" />
+          <Property Name="IdPergunta" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pergunta" Relationship="Self.FK__Resposta__IdPerg__2C3393D0" FromRole="Resposta" ToRole="Pergunta" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -224,9 +225,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Tema1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Icone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Cor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Pergunta" Relationship="Self.FK__Pergunta__IdTema__6B24EA82" FromRole="Tema" ToRole="Pergunta" />
+          <Property Name="Icone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cor" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Pergunta" Relationship="Self.FK__Pergunta__IdTema__286302EC" FromRole="Tema" ToRole="Pergunta" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -238,10 +239,10 @@
           <Property Name="Senha" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Pontos" Type="Int32" Nullable="false" />
           <Property Name="IdClassificacao" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Classificacao" Relationship="Self.FK__Usuario__IdClass__74AE54BC" FromRole="Usuario" ToRole="Classificacao" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Classificacao" Relationship="Self.FK__Usuario__IdClass__31EC6D26" FromRole="Usuario" ToRole="Classificacao" />
         </EntityType>
-        <Association Name="FK__Usuario__IdClass__74AE54BC">
+        <Association Name="FK__Usuario__IdClass__31EC6D26">
           <End Role="Classificacao" Type="Self.Classificacao" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -253,7 +254,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pergunta__IdNive__6C190EBB">
+        <Association Name="FK__Pergunta__IdNive__29572725">
           <End Role="Nivel" Type="Self.Nivel" Multiplicity="1" />
           <End Role="Pergunta" Type="Self.Pergunta" Multiplicity="*" />
           <ReferentialConstraint>
@@ -265,7 +266,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Pergunta__IdTema__6B24EA82">
+        <Association Name="FK__Pergunta__IdTema__286302EC">
           <End Role="Tema" Type="Self.Tema" Multiplicity="1" />
           <End Role="Pergunta" Type="Self.Pergunta" Multiplicity="*" />
           <ReferentialConstraint>
@@ -277,7 +278,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Resposta__IdPerg__797309D9">
+        <Association Name="FK__Resposta__IdPerg__2C3393D0">
           <End Role="Pergunta" Type="Self.Pergunta" Multiplicity="1" />
           <End Role="Resposta" Type="Self.Resposta" Multiplicity="*" />
           <ReferentialConstraint>
@@ -289,7 +290,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="JogoMasterEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="JogoMasterEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Administrador" EntityType="Self.Administrador" />
           <EntitySet Name="Classificacao" EntityType="Self.Classificacao" />
           <EntitySet Name="Nivel" EntityType="Self.Nivel" />
@@ -298,19 +299,19 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tema" EntityType="Self.Tema" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <AssociationSet Name="FK__Usuario__IdClass__74AE54BC" Association="Self.FK__Usuario__IdClass__74AE54BC">
+          <AssociationSet Name="FK__Usuario__IdClass__31EC6D26" Association="Self.FK__Usuario__IdClass__31EC6D26">
             <End Role="Classificacao" EntitySet="Classificacao" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pergunta__IdNive__6C190EBB" Association="Self.FK__Pergunta__IdNive__6C190EBB">
+          <AssociationSet Name="FK__Pergunta__IdNive__29572725" Association="Self.FK__Pergunta__IdNive__29572725">
             <End Role="Nivel" EntitySet="Nivel" />
             <End Role="Pergunta" EntitySet="Pergunta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Pergunta__IdTema__6B24EA82" Association="Self.FK__Pergunta__IdTema__6B24EA82">
+          <AssociationSet Name="FK__Pergunta__IdTema__286302EC" Association="Self.FK__Pergunta__IdTema__286302EC">
             <End Role="Tema" EntitySet="Tema" />
             <End Role="Pergunta" EntitySet="Pergunta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Resposta__IdPerg__797309D9" Association="Self.FK__Resposta__IdPerg__797309D9">
+          <AssociationSet Name="FK__Resposta__IdPerg__2C3393D0" Association="Self.FK__Resposta__IdPerg__2C3393D0">
             <End Role="Pergunta" EntitySet="Pergunta" />
             <End Role="Resposta" EntitySet="Resposta" />
           </AssociationSet>
@@ -320,7 +321,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="JogoMasterModelStoreContainer" CdmEntityContainer="JogoMasterEntities">
+        <EntityContainerMapping StorageEntityContainer="JogoMasterModelStoreContainer" CdmEntityContainer="JogoMasterEntities1">
           <EntitySetMapping Name="Administrador">
             <EntityTypeMapping TypeName="JogoMasterModel.Administrador">
               <MappingFragment StoreEntitySet="Administrador">
@@ -353,10 +354,10 @@
             <EntityTypeMapping TypeName="JogoMasterModel.Pergunta">
               <MappingFragment StoreEntitySet="Pergunta">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdTema" ColumnName="IdTema" />
-                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
                 <ScalarProperty Name="Pergunta1" ColumnName="Pergunta" />
                 <ScalarProperty Name="Patrocinada" ColumnName="Patrocinada" />
+                <ScalarProperty Name="IdTema" ColumnName="IdTema" />
+                <ScalarProperty Name="IdNivel" ColumnName="IdNivel" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -365,8 +366,8 @@
               <MappingFragment StoreEntitySet="Resposta">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Correta" ColumnName="Correta" />
-                <ScalarProperty Name="IdPergunta" ColumnName="IdPergunta" />
                 <ScalarProperty Name="Resposta1" ColumnName="Resposta" />
+                <ScalarProperty Name="IdPergunta" ColumnName="IdPergunta" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -394,13 +395,13 @@
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="JogoMasterModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Senha" ColumnName="Senha" />
                 <ScalarProperty Name="Pontos" ColumnName="Pontos" />
                 <ScalarProperty Name="IdClassificacao" ColumnName="IdClassificacao" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
