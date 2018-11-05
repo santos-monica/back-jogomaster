@@ -152,14 +152,11 @@ namespace JogoMaster.Controllers
                     .Where(x => x.IdPergunta == id)
                     .ToList();
 
-                //ctx.SaveChanges();
-
                 if (resposta == null) { return BadRequest("ID inválido"); }
 
                 resposta.ForEach(res =>
                 {
                     ctx.Entry(res).State = System.Data.Entity.EntityState.Deleted;
-                    //ctx.SaveChanges();
                 });
 
                 var pergunta = ctx.Perguntas
