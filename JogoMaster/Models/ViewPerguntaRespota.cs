@@ -10,4 +10,9 @@ namespace JogoMaster.Models
         public ViewPergunta pergunta { get; set; }
         public List<ViewResposta> respostas { get; set; }
     }
+
+    public class ListViewPerguntaRespota
+    {
+        public List<ViewPerguntaRespota> lista { get; set; }
+    }
 }

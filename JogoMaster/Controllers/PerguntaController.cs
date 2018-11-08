@@ -1,4 +1,5 @@
 ﻿using JogoMaster.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -96,46 +97,48 @@ namespace JogoMaster.Controllers
             return Ok(retorno);
         }
 
-        public IHttpActionResult Post(ViewPerguntaRespota dados)
+        public IHttpActionResult Post(ListViewPerguntaRespota dados)
         {
             if (dados == null)
             {
                 return BadRequest("Dados inválidos.");
             }
 
-            ValidaPergunta(dados.pergunta);
-            ValidaResposta(dados.respostas);
-            var pergunta_add = new Pergunta
+            dados.lista.ForEach(item =>
             {
-                Pergunta1 = dados.pergunta.Pergunta,
-                Patrocinada = dados.pergunta.Patrocinada,
-                IdTema = dados.pergunta.IdTema,
-                IdNivel = dados.pergunta.IdNivel
-            };
+                ValidaPergunta(item.pergunta);
+                ValidaResposta(item.respostas);
 
-            using (ctx = new JogoMasterEntities())
-            {
-                ctx.Perguntas.Add(pergunta_add);
-                ctx.SaveChanges();
-            }
-            dados.respostas.ForEach(res => res.IdPergunta = pergunta_add.Id);
-
-            using (ctx = new JogoMasterEntities())
-            {
-                dados.respostas.ForEach(res =>
+                var pergunta_add = new Pergunta
                 {
-                    ctx.Respostas.Add(new Resposta()
+                    Pergunta1 = item.pergunta.Pergunta,
+                    Patrocinada = item.pergunta.Patrocinada,
+                    IdTema = item.pergunta.IdTema,
+                    IdNivel = item.pergunta.IdNivel
+                };
+
+                using (ctx = new JogoMasterEntities())
+                {
+                    ctx.Perguntas.Add(pergunta_add);
+                    ctx.SaveChanges();
+                
+                    item.respostas.ForEach(res => res.IdPergunta = pergunta_add.Id);
+
+                    item.respostas.ForEach(res =>
                     {
-                        Correta = res.Correta,
-                        IdPergunta = pergunta_add.Id,
-                        Resposta1 = res.Resposta,
+                        ctx.Respostas.Add(new Resposta()
+                        {
+                            Correta = res.Correta,
+                            IdPergunta = pergunta_add.Id,
+                            Resposta1 = res.Resposta,
+                        });
                     });
-                });
 
-                ctx.SaveChanges();
-            }
+                    ctx.SaveChanges();
+                }
+            });
 
-            return Ok("Pergunta cadastrada com sucesso!");
+            return Ok("Perguntas cadastradas com sucesso!");
         }
 
         public IHttpActionResult Delete(int id)
