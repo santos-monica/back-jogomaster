@@ -175,7 +175,7 @@
           <Property Name="Classificacao1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PontuacaoMinima" Type="Int32" Nullable="false" />
           <Property Name="PontuacaoMaxima" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__IdClass__05D8E0BE" FromRole="Classificacao" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Usuario__IdClass__74AE54BC" FromRole="Classificacao" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Nivel">
           <Key>
@@ -208,6 +208,16 @@
           <Property Name="Resposta1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Pergunta" Relationship="Self.FK__Resposta__IdPerg__797309D9" FromRole="Resposta" ToRole="Pergunta" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="Tema">
           <Key>
             <PropertyRef Name="Id" />
@@ -224,14 +234,14 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nome" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Senha" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Pontos" Type="Int32" Nullable="false" />
           <Property Name="IdClassificacao" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Classificacao" Relationship="Self.FK__Usuario__IdClass__05D8E0BE" FromRole="Usuario" ToRole="Classificacao" />
+          <NavigationProperty Name="Classificacao" Relationship="Self.FK__Usuario__IdClass__74AE54BC" FromRole="Usuario" ToRole="Classificacao" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
-        <Association Name="FK__Usuario__IdClass__05D8E0BE">
+        <Association Name="FK__Usuario__IdClass__74AE54BC">
           <End Role="Classificacao" Type="Self.Classificacao" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -279,15 +289,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="JogoMasterEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="JogoMasterEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Administrador" EntityType="Self.Administrador" />
           <EntitySet Name="Classificacao" EntityType="Self.Classificacao" />
           <EntitySet Name="Nivel" EntityType="Self.Nivel" />
           <EntitySet Name="Pergunta" EntityType="Self.Pergunta" />
           <EntitySet Name="Resposta" EntityType="Self.Resposta" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tema" EntityType="Self.Tema" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <AssociationSet Name="FK__Usuario__IdClass__05D8E0BE" Association="Self.FK__Usuario__IdClass__05D8E0BE">
+          <AssociationSet Name="FK__Usuario__IdClass__74AE54BC" Association="Self.FK__Usuario__IdClass__74AE54BC">
             <End Role="Classificacao" EntitySet="Classificacao" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
@@ -303,24 +314,13 @@
             <End Role="Pergunta" EntitySet="Pergunta" />
             <End Role="Resposta" EntitySet="Resposta" />
           </AssociationSet>
-          <EntitySet Name="sysdiagrams" EntityType="JogoMasterModel.sysdiagrams" />
         </EntityContainer>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="JogoMasterModelStoreContainer" CdmEntityContainer="JogoMasterEntities2">
+        <EntityContainerMapping StorageEntityContainer="JogoMasterModelStoreContainer" CdmEntityContainer="JogoMasterEntities">
           <EntitySetMapping Name="Administrador">
             <EntityTypeMapping TypeName="JogoMasterModel.Administrador">
               <MappingFragment StoreEntitySet="Administrador">
@@ -370,6 +370,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="JogoMasterModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tema">
             <EntityTypeMapping TypeName="JogoMasterModel.Tema">
               <MappingFragment StoreEntitySet="Tema">
@@ -383,24 +394,13 @@
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="JogoMasterModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Senha" ColumnName="Senha" />
                 <ScalarProperty Name="Pontos" ColumnName="Pontos" />
                 <ScalarProperty Name="IdClassificacao" ColumnName="IdClassificacao" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="JogoMasterModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
