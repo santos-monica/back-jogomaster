@@ -14,7 +14,7 @@ namespace JogoMaster.Controllers
         {
             List<ViewPergunta> perguntas = null;
             List<ViewResposta> respostas = null;
-            List<ViewPerguntaRespota> retorno = null;
+            List<ViewPerguntaResposta> retorno = null;
             using (ctx = new JogoMasterEntities())
             {
                 perguntas = ctx.Perguntas.Select(s => new ViewPergunta()
@@ -40,10 +40,10 @@ namespace JogoMaster.Controllers
                 return NotFound();
             }
 
-            retorno = new List<ViewPerguntaRespota>();
+            retorno = new List<ViewPerguntaResposta>();
             perguntas.ForEach(p =>
             {
-                var item = new ViewPerguntaRespota
+                var item = new ViewPerguntaResposta
                 {
                     pergunta = p,
                     respostas = respostas.Where(x => x.IdPergunta == p.Id).ToList()
@@ -58,7 +58,7 @@ namespace JogoMaster.Controllers
         {
             ViewPergunta pergunta = null;
             List<ViewResposta> respostas = null;
-            ViewPerguntaRespota retorno = null;
+            ViewPerguntaResposta retorno = null;
             using (ctx = new JogoMasterEntities())
             {
                 pergunta = ctx.Perguntas
@@ -87,7 +87,7 @@ namespace JogoMaster.Controllers
                 })
                 .ToList();
 
-                retorno = new ViewPerguntaRespota
+                retorno = new ViewPerguntaResposta
                 {
                     pergunta = pergunta,
                     respostas = respostas
@@ -97,7 +97,52 @@ namespace JogoMaster.Controllers
             return Ok(retorno);
         }
 
-        public IHttpActionResult Post(ListViewPerguntaRespota dados)
+        public IHttpActionResult Get(int idNivel, int idsTema)
+        {
+            var rnd = new Random(DateTime.Now.Millisecond);
+            var perguntas = new List<ViewPergunta>(); ;
+            var retorno = new ListViewPerguntaResposta();
+            using (ctx = new JogoMasterEntities())
+            {
+                perguntas = ctx.Perguntas
+                .Where(x => x.IdNivel == idNivel && x.IdTema == idsTema)
+                .Select(x => new ViewPergunta()
+                {
+                    Id = x.Id,
+                    Pergunta = x.Pergunta1,
+                    IdNivel = x.IdNivel,
+                    IdTema = x.IdTema,
+                    Patrocinada = x.Patrocinada
+                }).ToList();
+
+                perguntas.ForEach(pergunta =>
+                {
+                    var res = ctx.Respostas
+                    .Where(x => x.IdPergunta == pergunta.Id)
+                    .Select(x => new ViewResposta()
+                    {
+                        Id = x.Id,
+                        Correta = x.Correta,
+                        Resposta = x.Resposta1,
+                        IdPergunta = x.IdPergunta
+                    })
+                    .ToList();
+
+                    var perRes = new ViewPerguntaResposta
+                    {
+                        pergunta = pergunta,
+                        respostas = res
+                    };
+
+                    retorno.lista.Add(perRes);
+                });
+            }
+
+            var teste = retorno.lista.OrderBy(x => rnd.Next()).Take(4);
+            return Ok(teste);
+        }
+
+        public IHttpActionResult Post(ListViewPerguntaResposta dados)
         {
             if (dados == null)
             {
@@ -121,7 +166,7 @@ namespace JogoMaster.Controllers
                 {
                     ctx.Perguntas.Add(pergunta_add);
                     ctx.SaveChanges();
-                
+
                     item.respostas.ForEach(res => res.IdPergunta = pergunta_add.Id);
 
                     item.respostas.ForEach(res =>

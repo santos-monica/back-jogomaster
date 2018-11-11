@@ -36,7 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\MONICA~1.SAN\AppData\Local\Temp\vs10F5.tmp\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\monic\AppData\Local\Temp\vsF303.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,7 +46,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\MONICA~1.SAN\AppData\Local\Temp\vs10F5.tmp\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\monic\AppData\Local\Temp\vsF303.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -253,7 +253,7 @@
     <Compile Include="Models\ViewClassificacao.cs" />
     <Compile Include="Models\ViewNivel.cs" />
     <Compile Include="Models\ViewPergunta.cs" />
-    <Compile Include="Models\ViewPerguntaRespota.cs" />
+    <Compile Include="Models\ViewPerguntaResposta.cs" />
     <Compile Include="Models\ViewResposta.cs" />
     <Compile Include="Models\ViewTema.cs" />
     <Compile Include="Models\ViewUsuario.cs" />

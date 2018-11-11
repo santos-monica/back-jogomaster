@@ -15,8 +15,8 @@ namespace JogoMaster.Controllers
             using (ctx = new JogoMasterEntities())
             {
                 Nivel nivel = null;
-                nivel = ctx.Niveis
-                    .FirstOrDefault(x => x.Id == dados.IdNivel);
+                nivel = ctx.Niveis.Where(x => x.Id == dados.IdNivel)
+                    .FirstOrDefault();
                 Refute(nivel == null, "Nível inexistente.");
 
                 Tema tema = null;
