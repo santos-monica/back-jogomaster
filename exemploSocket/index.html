@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./jquery-3.3.1.min.js"></script>
+    <script>
+    $(document).ready(function () {
+    var username = prompt('Please enter a username:');
+    var uri = `ws://localhost:64803/api/Score?Username=${username}`;
+    websocket = new WebSocket(uri);
+    
+    websocket.onopen = function () {
+        $('#messages').prepend('<div>Connected.</div>');
+        
+        $('#chatform').submit(function (event) {
+            var sendJson = {
+                Username: $('#resUsername')[0].value,
+                Correta: $('#resCorreta')[0].value,
+                IdTema: $('#resTema')[0].value,
+            }
+            console.log(typeof(sendJson))
+
+            console.log($('#resUsername')[0].value);
+            console.log(JSON.stringify(sendJson));
+
+            websocket.send(JSON.stringify(sendJson));
+            $('#resUsername').val('');
+            $('#resCorreta').val('');
+            $('#resTema').val('');
+            event.preventDefault();
+            console.log('on open');
+            console.log(event);
+        });
+    };
+    
+    websocket.onerror = function (event) {
+        $('#messages').prepend('<div>ERROR</div>');
+            console.log('on error');
+            console.log(event);
+    };
+    
+    websocket.onmessage = function (event) {
+        $('#messages').prepend('<div>' + event.data + '</div>');
+        console.log(JSON.parse(event.data))
+    };
+});
+    </script>
+</head>
+<body>
+    <form id="chatform" action="">
+        <label style="display:block" for="">Username</label><input id="resUsername" />
+        <label style="display:block" for="">IdTema</label><input id="resTema" />
+        <label style="display:block" for="">Correta</label><input id="resCorreta" />
+<button type="submit" style="width:200px;display:block">Submit</button>
+    </form>
+    <div id="messages" />
+</body>
+</html>
