@@ -20,30 +20,20 @@
                 Correta: $('#resCorreta')[0].value,
                 IdTema: $('#resTema')[0].value,
             }
-            console.log(typeof(sendJson))
-
-            console.log($('#resUsername')[0].value);
-            console.log(JSON.stringify(sendJson));
-
             websocket.send(JSON.stringify(sendJson));
             $('#resUsername').val('');
             $('#resCorreta').val('');
             $('#resTema').val('');
             event.preventDefault();
-            console.log('on open');
-            console.log(event);
         });
     };
     
     websocket.onerror = function (event) {
         $('#messages').prepend('<div>ERROR</div>');
-            console.log('on error');
-            console.log(event);
     };
     
     websocket.onmessage = function (event) {
         $('#messages').prepend('<div>' + event.data + '</div>');
-        console.log(JSON.parse(event.data))
     };
 });
     </script>
