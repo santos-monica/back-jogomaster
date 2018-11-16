@@ -226,6 +226,7 @@
       <DependentUpon>RespostaController.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\SalaController.cs" />
+    <Compile Include="Controllers\SalaValidacao.cs" />
     <Compile Include="Controllers\ScoreController.cs" />
     <Compile Include="Controllers\TemaController.cs" />
     <Compile Include="Controllers\TemaValidacao.cs">
@@ -272,6 +273,15 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resposta.cs">
+      <DependentUpon>JogoMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sala.cs">
+      <DependentUpon>JogoMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalaTemas.cs">
+      <DependentUpon>JogoMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalaUsuarios.cs">
       <DependentUpon>JogoMaster.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagrams.cs">

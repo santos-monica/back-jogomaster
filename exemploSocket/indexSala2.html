@@ -3,29 +3,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>teste 1</title>
+    <title>teste 2</title>
     <script src="./jquery-3.3.1.min.js"></script>
     <script>
     $(document).ready(function () {
-        var uri = `ws://localhost:64803/api/Sala?UsuarioId=1&Nivel=1&Tema1=401&Tema2=501&Tema3=601&Tema4=701&Tema5=801&Jogadores=2`;
+        var uri = `ws://localhost:64803/api/Sala?UsuarioId=2&SalaId=15`;
         websocket = new WebSocket(uri);
 
         websocket.onopen = function (event) {
             console.log(event);
             $('#messages').prepend('<div>Connected.</div>');
-            
-            $('#chatform').submit(function (event) {
-                var sendJson = {
-                    UsuarioId: $('#resUsuarioId')[0].value, 
-                    Username: $('#resUsername')[0].value,
-                }
-                websocket.send(JSON.stringify(sendJson));
-
-                $('#resUsuarioId').val('');
-                $('#resUsername').val('');
-                event.preventDefault();
-            });
         };
+        $('#chatform').submit(function (event) {
+            var sendJson = {
+                UsuarioId: $('#resUsuarioId')[0].value, 
+                Username: $('#resUsername')[0].value,
+            }
+            websocket.send(JSON.stringify(sendJson));
+            
+            $('#resUsuarioId').val('');
+            $('#resUsername').val('');
+            event.preventDefault();
+        });
         
         websocket.onerror = function (event) {
             $('#messages').prepend('<div>ERROR</div>');

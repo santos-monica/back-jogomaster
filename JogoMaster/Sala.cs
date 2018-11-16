@@ -12,26 +12,23 @@ namespace JogoMaster
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Sala
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public Sala()
         {
-            this.Sala = new HashSet<Sala>();
+            this.SalaTemas = new HashSet<SalaTemas>();
             this.SalaUsuarios = new HashSet<SalaUsuarios>();
         }
     
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Senha { get; set; }
-        public int Pontos { get; set; }
-        public int IdClassificacao { get; set; }
+        public Nullable<int> Nivel { get; set; }
+        public Nullable<int> Criador { get; set; }
     
-        public virtual Classificacao Classificacao { get; set; }
+        public virtual Nivel Nivel1 { get; set; }
+        public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sala> Sala { get; set; }
+        public virtual ICollection<SalaTemas> SalaTemas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalaUsuarios> SalaUsuarios { get; set; }
     }

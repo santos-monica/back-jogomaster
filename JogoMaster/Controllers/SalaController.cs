@@ -9,79 +9,131 @@ using System.Web.Script.Serialization;
 
 namespace JogoMaster.Controllers
 {
-    public class SalaController : ApiController
+    public partial class SalaController
     {
-        public HttpResponseMessage Get(int UsuarioId, string Username, int Tema, int Nivel, int Jogadores)
+        public int SalaCriada { get; set; }
+
+        public HttpResponseMessage Get(int UsuarioId, int Tema1, int Tema2, int Tema3, int Tema4, int Tema5, int Nivel, int Jogadores)
         {
-            var dados = new CriacaoSala
+            var dadosNovaSala = new CriacaoSala
             {
                 Jogadores = Jogadores,
                 NivelId = Nivel,
-                Username = Username,
                 UsuarioId = UsuarioId,
-                TemasIds = new List<int> { Tema },
+                TemasIds = new List<int> { Tema1, Tema2, Tema3, Tema4, Tema5 },
                 NovaSala = true
             };
 
-            HttpContext.Current.AcceptWebSocketRequest(new SalaWebSocketHandler(dados));
+            ValidaDadosSala(dadosNovaSala);
+
+            var socketHandler = new SalaWebSocketHandler(dadosNovaSala);
+            HttpContext.Current.AcceptWebSocketRequest(socketHandler);
             return Request.CreateResponse(HttpStatusCode.SwitchingProtocols);
         }
 
-        public HttpResponseMessage Get(int UsuarioId, string Username)
+        public HttpResponseMessage Get(int UsuarioId, int SalaId)
         {
-            var dados = new CriacaoSala
+            var dadosEntrarSala = new CriacaoSala
             {
-                Username = Username,
                 UsuarioId = UsuarioId,
+                SalaId = SalaId,
                 NovaSala = false
             };
 
-            HttpContext.Current.AcceptWebSocketRequest(new SalaWebSocketHandler(dados));
+            ValidaDadosSala(dadosEntrarSala);
+
+            HttpContext.Current.AcceptWebSocketRequest(new SalaWebSocketHandler(dadosEntrarSala));
             return Request.CreateResponse(HttpStatusCode.SwitchingProtocols);
         }
 
         class SalaWebSocketHandler : WebSocketHandler
         {
-            private static WebSocketCollection _salaClients = new WebSocketCollection();
+            public static WebSocketCollection salaClients = new WebSocketCollection();
+            public SalaPartida SalaPartidaMaster = new SalaPartida();
+            public JogoMasterEntities ctx;
+            public JavaScriptSerializer serializer = new JavaScriptSerializer();
 
-            private Sala SalaPartida = new Sala();
-
-            public SalaWebSocketHandler(CriacaoSala dados)
+            public SalaWebSocketHandler(CriacaoSala dadosSala)
             {
-                if (dados.NovaSala)
+                if (dadosSala.NovaSala)
                 {
-                    SalaPartida.CriadorSala = dados.UsuarioId;
-                    SalaPartida.Nivel = dados.NivelId;
-                    SalaPartida.Temas = dados.TemasIds;
-                    SalaPartida.TotalJogadores = dados.Jogadores;
+                    criaNovaSala(dadosSala);
                 }
 
-                SalaPartida.JogadoresNaSala++;
-                SalaPartida.Usernames.Add(dados.Username);
-                SalaPartida.Usuarios.Add(dados.UsuarioId);
+                adicionaNovoJogador(dadosSala.UsuarioId, 1);
             }
 
             public override void OnOpen()
             {
-                _salaClients.Add(this);
+                salaClients.Add(this);
             }
 
-            public override void OnMessage(string teste)
+            public override void OnMessage(string jogador)
             {
-                var serializer = new JavaScriptSerializer();
-                var novoJogador = serializer.Deserialize<ParticiparSala>(teste);
+                var novoJogador = serializer.Deserialize<ParticiparSala>(jogador);
 
-                SalaPartida.Usernames.Add(novoJogador.Username);
-                SalaPartida.Usuarios.Add(novoJogador.UsuarioId);
-                SalaPartida.JogadoresNaSala++;
+                adicionaNovoJogador(novoJogador.SalaId, novoJogador.UsuarioId);
 
-                if (SalaPartida.JogadoresNaSala == SalaPartida.TotalJogadores)
+                if (SalaPartidaMaster.JogadoresNaSala == SalaPartidaMaster.TotalJogadores)
                 {
-                    SalaPartida.SalaCheia = true;
+                    SalaPartidaMaster.SalaCheia = true;
                 }
 
-                var salaAtualizada = serializer.Serialize(SalaPartida);
-                _salaClients.Broadcast(salaAtualizada);
+                var salaAtualizada = serializer.Serialize(SalaPartidaMaster);
+                salaClients.Broadcast(salaAtualizada);
+            }
+
+            // Criação de sala e inserção de usuário
+            private void criaNovaSala(CriacaoSala dados)
+            {
+                SalaPartidaMaster.CriadorSala = dados.UsuarioId;
+                SalaPartidaMaster.Nivel = dados.NivelId;
+                SalaPartidaMaster.Temas = dados.TemasIds;
+                SalaPartidaMaster.TotalJogadores = dados.Jogadores;
+
+                using (ctx = new JogoMasterEntities())
+                {
+                    var sala = ctx.Salas.Add(new Sala
+                    {
+                        Nivel = SalaPartidaMaster.Nivel,
+                        Criador = SalaPartidaMaster.CriadorSala
+
+                    });
+
+                    SalaPartidaMaster.Temas.ForEach(temaId =>
+                    {
+                        ctx.SalasTemas.Add(new SalaTemas
+                        {
+                            SalaId = sala.Id,
+                            TemaId = temaId
+                        });
+                    });
+
+                    ctx.SalasUsuarios.Add(new SalaUsuarios
+                    {
+                        SalaId = sala.Id,
+                        UsuarioId = dados.UsuarioId
+                    });
+
+                    ctx.SaveChanges();
+                    SalaPartidaMaster.SalaId = sala.Id;
+                }
+            }
+
+            private void adicionaNovoJogador(int salaId, int usuarioId)
+            {
+                SalaPartidaMaster.JogadoresNaSala++;
+                SalaPartidaMaster.Usuarios.Add(usuarioId);
+
+                using (ctx = new JogoMasterEntities())
+                {
+                    ctx.SalasUsuarios.Add(new SalaUsuarios
+                    {
+                        SalaId = salaId,
+                        UsuarioId = usuarioId
+                    });
+                    ctx.SaveChanges();
+                }
             }
         }
     }
