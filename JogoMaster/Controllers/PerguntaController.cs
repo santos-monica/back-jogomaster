@@ -97,54 +97,64 @@ namespace JogoMaster.Controllers
             return Ok(retorno);
         }
 
-        public IHttpActionResult Get(int idNivel, int idsTema)
+        [Route("api/buscarPerguntas")]
+        public IHttpActionResult Post(ConsultaNivelTemas dados)
         {
             var rnd = new Random(DateTime.Now.Millisecond);
-            var perguntas = new List<ViewPergunta>(); ;
+            var perguntas = new List<ViewPergunta>();
             var retorno = new ListViewPerguntaResposta();
+
+            ValidaDadosConsulta(dados);
+
             using (ctx = new JogoMasterEntities())
             {
-                perguntas = ctx.Perguntas
-                .Where(x => x.IdNivel == idNivel && x.IdTema == idsTema)
-                .Select(x => new ViewPergunta()
+                dados.idsTema.ForEach(tema =>
                 {
-                    Id = x.Id,
-                    Pergunta = x.Pergunta1,
-                    IdNivel = x.IdNivel,
-                    IdTema = x.IdTema,
-                    Patrocinada = x.Patrocinada
-                }).ToList();
-
-                perguntas.ForEach(pergunta =>
-                {
-                    var res = ctx.Respostas
-                    .Where(x => x.IdPergunta == pergunta.Id)
-                    .Select(x => new ViewResposta()
+                    var perguntasBanco = ctx.Perguntas
+                    .Where(x => x.IdNivel == dados.idNivel && x.IdTema == tema)
+                    .Select(x => new ViewPergunta()
                     {
                         Id = x.Id,
-                        Correta = x.Correta,
-                        Resposta = x.Resposta1,
-                        IdPergunta = x.IdPergunta
-                    })
-                    .ToList();
+                        Pergunta = x.Pergunta1,
+                        IdNivel = x.IdNivel,
+                        IdTema = x.IdTema,
+                        Patrocinada = x.Patrocinada
+                    }).ToList();
 
-                    var perRes = new ViewPerguntaResposta
+                    if (perguntasBanco.Any())
                     {
-                        pergunta = pergunta,
-                        respostas = res
-                    };
+                        perguntas = perguntasBanco.OrderBy(x => rnd.Next()).Take(4).ToList();
 
-                    retorno.lista.Add(perRes);
+                        perguntas.ForEach(pergunta =>
+                        {
+                            var res = ctx.Respostas
+                            .Where(x => x.IdPergunta == pergunta.Id)
+                            .Select(x => new ViewResposta()
+                            {
+                                Id = x.Id,
+                                Correta = x.Correta,
+                                Resposta = x.Resposta1,
+                                IdPergunta = x.IdPergunta
+                            })
+                            .ToList();
+
+                            var perRes = new ViewPerguntaResposta
+                            {
+                                pergunta = pergunta,
+                                respostas = res
+                            };
+
+                            retorno.lista.Add(perRes);
+                        });
+                    }
                 });
             }
-
-            var teste = retorno.lista.OrderBy(x => rnd.Next()).Take(4);
-            return Ok(teste);
+            return Ok(retorno.lista);
         }
 
         public IHttpActionResult Post(ListViewPerguntaResposta dados)
         {
-            if (dados == null)
+            if (dados == null || !dados.lista.Any())
             {
                 return BadRequest("Dados inválidos.");
             }

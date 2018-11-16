@@ -19,4 +19,10 @@ namespace JogoMaster.Models
             lista = new List<ViewPerguntaResposta>();
         }
     }
+
+    public class ConsultaNivelTemas
+    {
+        public int idNivel { get; set; }
+        public List<int> idsTema { get; set; }
+    }
 }
