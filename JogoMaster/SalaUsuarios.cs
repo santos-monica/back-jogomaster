@@ -15,8 +15,8 @@ namespace JogoMaster
     public partial class SalaUsuarios
     {
         public int Id { get; set; }
-        public Nullable<int> SalaId { get; set; }
-        public Nullable<int> UsuarioId { get; set; }
+        public int SalaId { get; set; }
+        public int UsuarioId { get; set; }
     
         public virtual Sala Sala { get; set; }
         public virtual Usuario Usuario { get; set; }

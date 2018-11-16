@@ -7,10 +7,22 @@ namespace JogoMaster.Controllers
     {
         private JogoMasterEntities ctx;
 
+        public void ValidarUsuario(int usuario)
+        {
+            Refute(usuario <= 0, "Usuário inválido");
+            using (ctx = new JogoMasterEntities())
+            {
+                Usuario Usuario = null;
+                Usuario = ctx.Usuarios
+                    .FirstOrDefault(x => x.Id == usuario);
+                Refute(Usuario == null, $"Usuário {usuario} inexistente.");
+            }
+        }
+
         public void ValidaDadosSala(CriacaoSala dados)
         {
             Refute(dados.UsuarioId <= 0, "Usuário inválido");
-            
+
             using (ctx = new JogoMasterEntities())
             {
                 if (dados.NovaSala)

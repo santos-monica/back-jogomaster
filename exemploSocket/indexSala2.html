@@ -7,7 +7,7 @@
     <script src="./jquery-3.3.1.min.js"></script>
     <script>
     $(document).ready(function () {
-        var uri = `ws://localhost:64803/api/Sala?UsuarioId=2&SalaId=15`;
+        var uri = `ws://localhost:64803/api/Sala?UsuarioId=2`;
         websocket = new WebSocket(uri);
 
         websocket.onopen = function (event) {
@@ -16,13 +16,10 @@
         };
         $('#chatform').submit(function (event) {
             var sendJson = {
-                UsuarioId: $('#resUsuarioId')[0].value, 
-                Username: $('#resUsername')[0].value,
+                SalaId: $("#salaId").val()
             }
             websocket.send(JSON.stringify(sendJson));
-            
-            $('#resUsuarioId').val('');
-            $('#resUsername').val('');
+            $('#salaId').val('');
             event.preventDefault();
         });
         
@@ -43,9 +40,8 @@
 
 <body>
     <form id="chatform" action="">
-        <label style="display:block" for="">UsuarioId</label><input id="resUsuarioId" />
-        <label style="display:block" for="">Username</label><input id="resUsername" />
-<button type="submit" style="width:200px;display:block">Submit</button>
+        <label style="display:block" for="">Sala</label><input id="salaId" />
+        <button id="entrarSala" type="submit" style="width:200px;display:block">Submit</button>
     </form>
     <div id="messages" />
 </body>

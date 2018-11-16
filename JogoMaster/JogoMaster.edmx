@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="JogoMasterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="JogoMasterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrador">
           <Key>
             <PropertyRef Name="Id" />
@@ -54,24 +54,25 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nivel" Type="int" />
-          <Property Name="Criador" Type="int" />
+          <Property Name="Nivel" Type="int" Nullable="false" />
+          <Property Name="Criador" Type="int" Nullable="false" />
+          <Property Name="Jogadores" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SalaTemas">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SalaId" Type="int" />
-          <Property Name="TemaId" Type="int" />
+          <Property Name="SalaId" Type="int" Nullable="false" />
+          <Property Name="TemaId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SalaUsuarios">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SalaId" Type="int" />
-          <Property Name="UsuarioId" Type="int" />
+          <Property Name="SalaId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -140,8 +141,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sala__Criador__2A164134">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+        <Association Name="FK__Sala__Criador__3B40CD36">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Sala" Type="Self.Sala" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
@@ -152,8 +153,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sala__Nivel__29221CFB">
-          <End Role="Nivel" Type="Self.Nivel" Multiplicity="0..1" />
+        <Association Name="FK__Sala__Nivel__3A4CA8FD">
+          <End Role="Nivel" Type="Self.Nivel" Multiplicity="1" />
           <End Role="Sala" Type="Self.Sala" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Nivel">
@@ -164,8 +165,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SalaTemas__SalaI__32AB8735">
-          <End Role="Sala" Type="Self.Sala" Multiplicity="0..1" />
+        <Association Name="FK__SalaTemas__SalaI__3E1D39E1">
+          <End Role="Sala" Type="Self.Sala" Multiplicity="1" />
           <End Role="SalaTemas" Type="Self.SalaTemas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sala">
@@ -176,8 +177,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SalaTemas__TemaI__339FAB6E">
-          <End Role="Tema" Type="Self.Tema" Multiplicity="0..1" />
+        <Association Name="FK__SalaTemas__TemaI__3F115E1A">
+          <End Role="Tema" Type="Self.Tema" Multiplicity="1" />
           <End Role="SalaTemas" Type="Self.SalaTemas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tema">
@@ -188,8 +189,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SalaUsuar__SalaI__367C1819">
-          <End Role="Sala" Type="Self.Sala" Multiplicity="0..1" />
+        <Association Name="FK__SalaUsuar__SalaI__41EDCAC5">
+          <End Role="Sala" Type="Self.Sala" Multiplicity="1" />
           <End Role="SalaUsuarios" Type="Self.SalaUsuarios" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sala">
@@ -200,8 +201,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SalaUsuar__Usuar__37703C52">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+        <Association Name="FK__SalaUsuar__Usuar__42E1EEFE">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="SalaUsuarios" Type="Self.SalaUsuarios" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
@@ -248,27 +249,27 @@
             <End Role="Pergunta" EntitySet="Pergunta" />
             <End Role="Resposta" EntitySet="Resposta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sala__Criador__2A164134" Association="Self.FK__Sala__Criador__2A164134">
+          <AssociationSet Name="FK__Sala__Criador__3B40CD36" Association="Self.FK__Sala__Criador__3B40CD36">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Sala" EntitySet="Sala" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sala__Nivel__29221CFB" Association="Self.FK__Sala__Nivel__29221CFB">
+          <AssociationSet Name="FK__Sala__Nivel__3A4CA8FD" Association="Self.FK__Sala__Nivel__3A4CA8FD">
             <End Role="Nivel" EntitySet="Nivel" />
             <End Role="Sala" EntitySet="Sala" />
           </AssociationSet>
-          <AssociationSet Name="FK__SalaTemas__SalaI__32AB8735" Association="Self.FK__SalaTemas__SalaI__32AB8735">
+          <AssociationSet Name="FK__SalaTemas__SalaI__3E1D39E1" Association="Self.FK__SalaTemas__SalaI__3E1D39E1">
             <End Role="Sala" EntitySet="Sala" />
             <End Role="SalaTemas" EntitySet="SalaTemas" />
           </AssociationSet>
-          <AssociationSet Name="FK__SalaTemas__TemaI__339FAB6E" Association="Self.FK__SalaTemas__TemaI__339FAB6E">
+          <AssociationSet Name="FK__SalaTemas__TemaI__3F115E1A" Association="Self.FK__SalaTemas__TemaI__3F115E1A">
             <End Role="Tema" EntitySet="Tema" />
             <End Role="SalaTemas" EntitySet="SalaTemas" />
           </AssociationSet>
-          <AssociationSet Name="FK__SalaUsuar__SalaI__367C1819" Association="Self.FK__SalaUsuar__SalaI__367C1819">
+          <AssociationSet Name="FK__SalaUsuar__SalaI__41EDCAC5" Association="Self.FK__SalaUsuar__SalaI__41EDCAC5">
             <End Role="Sala" EntitySet="Sala" />
             <End Role="SalaUsuarios" EntitySet="SalaUsuarios" />
           </AssociationSet>
-          <AssociationSet Name="FK__SalaUsuar__Usuar__37703C52" Association="Self.FK__SalaUsuar__Usuar__37703C52">
+          <AssociationSet Name="FK__SalaUsuar__Usuar__42E1EEFE" Association="Self.FK__SalaUsuar__Usuar__42E1EEFE">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="SalaUsuarios" EntitySet="SalaUsuarios" />
           </AssociationSet>
@@ -277,8 +278,7 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JogoMasterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -308,7 +308,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nivel1" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Pergunta" Relationship="Self.FK__Pergunta__IdNive__6C190EBB" FromRole="Nivel" ToRole="Pergunta" />
-          <NavigationProperty Name="Sala" Relationship="Self.FK__Sala__Nivel__29221CFB" FromRole="Nivel" ToRole="Sala" />
+          <NavigationProperty Name="Sala" Relationship="Self.FK__Sala__Nivel__3A4CA8FD" FromRole="Nivel" ToRole="Sala" />
         </EntityType>
         <EntityType Name="Pergunta">
           <Key>
@@ -338,32 +338,33 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nivel" Type="Int32" />
-          <Property Name="Criador" Type="Int32" />
-          <NavigationProperty Name="Nivel1" Relationship="Self.FK__Sala__Nivel__29221CFB" FromRole="Sala" ToRole="Nivel" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK__Sala__Criador__2A164134" FromRole="Sala" ToRole="Usuario" />
-          <NavigationProperty Name="SalaTemas" Relationship="Self.FK__SalaTemas__SalaI__32AB8735" FromRole="Sala" ToRole="SalaTemas" />
-          <NavigationProperty Name="SalaUsuarios" Relationship="Self.FK__SalaUsuar__SalaI__367C1819" FromRole="Sala" ToRole="SalaUsuarios" />
+          <Property Name="Nivel" Type="Int32" Nullable="false" />
+          <Property Name="Criador" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Nivel1" Relationship="Self.FK__Sala__Nivel__3A4CA8FD" FromRole="Sala" ToRole="Nivel" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Sala__Criador__3B40CD36" FromRole="Sala" ToRole="Usuario" />
+          <NavigationProperty Name="SalaTemas" Relationship="Self.FK__SalaTemas__SalaI__3E1D39E1" FromRole="Sala" ToRole="SalaTemas" />
+          <NavigationProperty Name="SalaUsuarios" Relationship="Self.FK__SalaUsuar__SalaI__41EDCAC5" FromRole="Sala" ToRole="SalaUsuarios" />
+          <Property Name="Jogadores" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="SalaTemas">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SalaId" Type="Int32" />
-          <Property Name="TemaId" Type="Int32" />
-          <NavigationProperty Name="Sala" Relationship="Self.FK__SalaTemas__SalaI__32AB8735" FromRole="SalaTemas" ToRole="Sala" />
-          <NavigationProperty Name="Tema" Relationship="Self.FK__SalaTemas__TemaI__339FAB6E" FromRole="SalaTemas" ToRole="Tema" />
+          <Property Name="SalaId" Type="Int32" Nullable="false" />
+          <Property Name="TemaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Sala" Relationship="Self.FK__SalaTemas__SalaI__3E1D39E1" FromRole="SalaTemas" ToRole="Sala" />
+          <NavigationProperty Name="Tema" Relationship="Self.FK__SalaTemas__TemaI__3F115E1A" FromRole="SalaTemas" ToRole="Tema" />
         </EntityType>
         <EntityType Name="SalaUsuarios">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SalaId" Type="Int32" />
-          <Property Name="UsuarioId" Type="Int32" />
-          <NavigationProperty Name="Sala" Relationship="Self.FK__SalaUsuar__SalaI__367C1819" FromRole="SalaUsuarios" ToRole="Sala" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK__SalaUsuar__Usuar__37703C52" FromRole="SalaUsuarios" ToRole="Usuario" />
+          <Property Name="SalaId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Sala" Relationship="Self.FK__SalaUsuar__SalaI__41EDCAC5" FromRole="SalaUsuarios" ToRole="Sala" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__SalaUsuar__Usuar__42E1EEFE" FromRole="SalaUsuarios" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -384,7 +385,7 @@
           <Property Name="Icone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Cor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Pergunta" Relationship="Self.FK__Pergunta__IdTema__2180FB33" FromRole="Tema" ToRole="Pergunta" />
-          <NavigationProperty Name="SalaTemas" Relationship="Self.FK__SalaTemas__TemaI__339FAB6E" FromRole="Tema" ToRole="SalaTemas" />
+          <NavigationProperty Name="SalaTemas" Relationship="Self.FK__SalaTemas__TemaI__3F115E1A" FromRole="Tema" ToRole="SalaTemas" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -398,8 +399,8 @@
           <Property Name="Pontos" Type="Int32" Nullable="false" />
           <Property Name="IdClassificacao" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Classificacao" Relationship="Self.FK__Usuario__IdClass__05D8E0BE" FromRole="Usuario" ToRole="Classificacao" />
-          <NavigationProperty Name="Sala" Relationship="Self.FK__Sala__Criador__2A164134" FromRole="Usuario" ToRole="Sala" />
-          <NavigationProperty Name="SalaUsuarios" Relationship="Self.FK__SalaUsuar__Usuar__37703C52" FromRole="Usuario" ToRole="SalaUsuarios" />
+          <NavigationProperty Name="Sala" Relationship="Self.FK__Sala__Criador__3B40CD36" FromRole="Usuario" ToRole="Sala" />
+          <NavigationProperty Name="SalaUsuarios" Relationship="Self.FK__SalaUsuar__Usuar__42E1EEFE" FromRole="Usuario" ToRole="SalaUsuarios" />
         </EntityType>
         <Association Name="FK__Usuario__IdClass__05D8E0BE">
           <End Role="Classificacao" Type="Self.Classificacao" Multiplicity="1" />
@@ -425,8 +426,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sala__Nivel__29221CFB">
-          <End Role="Nivel" Type="Self.Nivel" Multiplicity="0..1" />
+        <Association Name="FK__Sala__Nivel__3A4CA8FD">
+          <End Role="Nivel" Type="Self.Nivel" Multiplicity="1" />
           <End Role="Sala" Type="Self.Sala" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Nivel">
@@ -461,8 +462,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sala__Criador__2A164134">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+        <Association Name="FK__Sala__Criador__3B40CD36">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Sala" Type="Self.Sala" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
@@ -473,8 +474,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SalaTemas__SalaI__32AB8735">
-          <End Role="Sala" Type="Self.Sala" Multiplicity="0..1" />
+        <Association Name="FK__SalaTemas__SalaI__3E1D39E1">
+          <End Role="Sala" Type="Self.Sala" Multiplicity="1" />
           <End Role="SalaTemas" Type="Self.SalaTemas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sala">
@@ -485,8 +486,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SalaUsuar__SalaI__367C1819">
-          <End Role="Sala" Type="Self.Sala" Multiplicity="0..1" />
+        <Association Name="FK__SalaUsuar__SalaI__41EDCAC5">
+          <End Role="Sala" Type="Self.Sala" Multiplicity="1" />
           <End Role="SalaUsuarios" Type="Self.SalaUsuarios" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sala">
@@ -497,8 +498,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SalaTemas__TemaI__339FAB6E">
-          <End Role="Tema" Type="Self.Tema" Multiplicity="0..1" />
+        <Association Name="FK__SalaTemas__TemaI__3F115E1A">
+          <End Role="Tema" Type="Self.Tema" Multiplicity="1" />
           <End Role="SalaTemas" Type="Self.SalaTemas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tema">
@@ -509,8 +510,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SalaUsuar__Usuar__37703C52">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+        <Association Name="FK__SalaUsuar__Usuar__42E1EEFE">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="SalaUsuarios" Type="Self.SalaUsuarios" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
@@ -541,7 +542,7 @@
             <End Role="Nivel" EntitySet="Nivel" />
             <End Role="Pergunta" EntitySet="Pergunta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sala__Nivel__29221CFB" Association="Self.FK__Sala__Nivel__29221CFB">
+          <AssociationSet Name="FK__Sala__Nivel__3A4CA8FD" Association="Self.FK__Sala__Nivel__3A4CA8FD">
             <End Role="Nivel" EntitySet="Nivel" />
             <End Role="Sala" EntitySet="Sala" />
           </AssociationSet>
@@ -553,23 +554,23 @@
             <End Role="Pergunta" EntitySet="Pergunta" />
             <End Role="Resposta" EntitySet="Resposta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sala__Criador__2A164134" Association="Self.FK__Sala__Criador__2A164134">
+          <AssociationSet Name="FK__Sala__Criador__3B40CD36" Association="Self.FK__Sala__Criador__3B40CD36">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Sala" EntitySet="Sala" />
           </AssociationSet>
-          <AssociationSet Name="FK__SalaTemas__SalaI__32AB8735" Association="Self.FK__SalaTemas__SalaI__32AB8735">
+          <AssociationSet Name="FK__SalaTemas__SalaI__3E1D39E1" Association="Self.FK__SalaTemas__SalaI__3E1D39E1">
             <End Role="Sala" EntitySet="Sala" />
             <End Role="SalaTemas" EntitySet="SalaTemas" />
           </AssociationSet>
-          <AssociationSet Name="FK__SalaUsuar__SalaI__367C1819" Association="Self.FK__SalaUsuar__SalaI__367C1819">
+          <AssociationSet Name="FK__SalaUsuar__SalaI__41EDCAC5" Association="Self.FK__SalaUsuar__SalaI__41EDCAC5">
             <End Role="Sala" EntitySet="Sala" />
             <End Role="SalaUsuarios" EntitySet="SalaUsuarios" />
           </AssociationSet>
-          <AssociationSet Name="FK__SalaTemas__TemaI__339FAB6E" Association="Self.FK__SalaTemas__TemaI__339FAB6E">
+          <AssociationSet Name="FK__SalaTemas__TemaI__3F115E1A" Association="Self.FK__SalaTemas__TemaI__3F115E1A">
             <End Role="Tema" EntitySet="Tema" />
             <End Role="SalaTemas" EntitySet="SalaTemas" />
           </AssociationSet>
-          <AssociationSet Name="FK__SalaUsuar__Usuar__37703C52" Association="Self.FK__SalaUsuar__Usuar__37703C52">
+          <AssociationSet Name="FK__SalaUsuar__Usuar__42E1EEFE" Association="Self.FK__SalaUsuar__Usuar__42E1EEFE">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="SalaUsuarios" EntitySet="SalaUsuarios" />
           </AssociationSet>
@@ -632,6 +633,7 @@
           <EntitySetMapping Name="Sala">
             <EntityTypeMapping TypeName="JogoMasterModel.Sala">
               <MappingFragment StoreEntitySet="Sala">
+                <ScalarProperty Name="Jogadores" ColumnName="Jogadores" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nivel" ColumnName="Nivel" />
                 <ScalarProperty Name="Criador" ColumnName="Criador" />
