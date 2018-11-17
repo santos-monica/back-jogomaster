@@ -58,5 +58,69 @@ namespace JogoMaster.Controllers
                 Refute(Usuario == null, $"Usuário {dados.UsuarioId} inexistente.");
             }
         }
+
+        public void criaNovaSala(CriacaoSala dados, SalaPartida SalaPartidaMaster)
+        {
+            SalaPartidaMaster.CriadorSala = dados.UsuarioId;
+            SalaPartidaMaster.Nivel = dados.NivelId;
+            SalaPartidaMaster.Temas = dados.TemasIds;
+            SalaPartidaMaster.TotalJogadores = dados.Jogadores;
+
+            using (ctx = new JogoMasterEntities())
+            {
+                var sala = ctx.Salas.Add(new Sala
+                {
+                    Nivel = SalaPartidaMaster.Nivel,
+                    Criador = SalaPartidaMaster.CriadorSala,
+                    Jogadores = SalaPartidaMaster.TotalJogadores,
+                    Ativa = true
+                });
+
+                SalaPartidaMaster.Temas.ForEach(temaId =>
+                {
+                    ctx.SalasTemas.Add(new SalaTemas
+                    {
+                        SalaId = sala.Id,
+                        TemaId = temaId
+                    });
+                });
+
+                ctx.SaveChanges();
+                dados.SalaId = sala.Id;
+                SalaPartidaMaster.SalaId = sala.Id;
+            }
+        }
+
+        public void adicionaNovoJogador(int salaId, int usuarioId, SalaPartida SalaPartidaMaster)
+        {
+            SalaPartidaMaster.JogadoresNaSala++;
+            SalaPartidaMaster.Usuarios.Add(usuarioId);
+
+            using (ctx = new JogoMasterEntities())
+            {
+                ctx.SalasUsuarios.Add(new SalaUsuarios
+                {
+                    SalaId = salaId,
+                    UsuarioId = usuarioId
+                });
+                ctx.SaveChanges();
+            }
+        }
+
+        public void buscaDadosSala(CriacaoSala novoJogador, SalaPartida SalaPartidaMaster)
+        {
+            using (ctx = new JogoMasterEntities())
+            {
+                SalaPartidaMaster.SalaId = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Id).FirstOrDefault();
+                SalaPartidaMaster.CriadorSala = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Criador).FirstOrDefault();
+                SalaPartidaMaster.Usuarios = ctx.SalasUsuarios.Where(x => x.SalaId == novoJogador.SalaId).Select(x => x.UsuarioId).ToList();
+                SalaPartidaMaster.TotalJogadores = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Jogadores).FirstOrDefault();
+                SalaPartidaMaster.JogadoresNaSala = SalaPartidaMaster.Usuarios.Count;
+                SalaPartidaMaster.Temas = ctx.SalasTemas.Where(x => x.SalaId == novoJogador.SalaId).Select(x => x.TemaId).ToList();
+                SalaPartidaMaster.Nivel = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Nivel).FirstOrDefault();
+                SalaPartidaMaster.SalaCheia = SalaPartidaMaster.JogadoresNaSala < SalaPartidaMaster.TotalJogadores ? false : true;
+            }
+        }
+
     }
 }

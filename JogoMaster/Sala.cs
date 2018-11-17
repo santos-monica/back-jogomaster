@@ -25,6 +25,7 @@ namespace JogoMaster
         public int Nivel { get; set; }
         public int Criador { get; set; }
         public int Jogadores { get; set; }
+        public bool Ativa { get; set; }
     
         public virtual Nivel Nivel1 { get; set; }
         public virtual Usuario Usuario { get; set; }

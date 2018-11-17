@@ -57,6 +57,7 @@
           <Property Name="Nivel" Type="int" Nullable="false" />
           <Property Name="Criador" Type="int" Nullable="false" />
           <Property Name="Jogadores" Type="int" Nullable="false" />
+          <Property Name="Ativa" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SalaTemas">
           <Key>
@@ -345,6 +346,7 @@
           <NavigationProperty Name="SalaTemas" Relationship="Self.FK__SalaTemas__SalaI__3E1D39E1" FromRole="Sala" ToRole="SalaTemas" />
           <NavigationProperty Name="SalaUsuarios" Relationship="Self.FK__SalaUsuar__SalaI__41EDCAC5" FromRole="Sala" ToRole="SalaUsuarios" />
           <Property Name="Jogadores" Type="Int32" Nullable="false" />
+          <Property Name="Ativa" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="SalaTemas">
           <Key>
@@ -633,6 +635,7 @@
           <EntitySetMapping Name="Sala">
             <EntityTypeMapping TypeName="JogoMasterModel.Sala">
               <MappingFragment StoreEntitySet="Sala">
+                <ScalarProperty Name="Ativa" ColumnName="Ativa" />
                 <ScalarProperty Name="Jogadores" ColumnName="Jogadores" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nivel" ColumnName="Nivel" />

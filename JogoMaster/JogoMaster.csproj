@@ -263,6 +263,7 @@
     <Compile Include="Models\ViewPergunta.cs" />
     <Compile Include="Models\ViewPerguntaResposta.cs" />
     <Compile Include="Models\ViewResposta.cs" />
+    <Compile Include="Models\ViewSala.cs" />
     <Compile Include="Models\ViewTema.cs" />
     <Compile Include="Models\ViewUsuario.cs" />
     <Compile Include="Nivel.cs">
