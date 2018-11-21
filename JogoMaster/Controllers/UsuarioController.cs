@@ -68,7 +68,6 @@ namespace JogoMaster.Controllers
                     Pontos = dados.Pontos,
                     IdClassificacao = dados.IdClassificacao
                 });
-
                 ctx.SaveChanges();
             }
 
