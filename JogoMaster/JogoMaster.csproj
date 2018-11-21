@@ -36,7 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\Jullian\AppData\Local\Temp\vs973.tmp\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\monic\AppData\Local\Temp\vs7A32.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,7 +46,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\Jullian\AppData\Local\Temp\vs973.tmp\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\monic\AppData\Local\Temp\vs7A32.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -245,6 +245,8 @@
     <Compile Include="Controllers\RespostaValidacao.cs">
       <DependentUpon>RespostaController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\SalaController.cs" />
+    <Compile Include="Controllers\SalaValidacao.cs" />
     <Compile Include="Controllers\ScoreController.cs" />
     <Compile Include="Controllers\TemaController.cs" />
     <Compile Include="Controllers\TemaValidacao.cs">
@@ -274,12 +276,14 @@
       <DependentUpon>JogoMaster.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Jogada.cs" />
+    <Compile Include="Models\Sala.cs" />
     <Compile Include="Models\ViewAdministrador.cs" />
     <Compile Include="Models\ViewClassificacao.cs" />
     <Compile Include="Models\ViewNivel.cs" />
     <Compile Include="Models\ViewPergunta.cs" />
     <Compile Include="Models\ViewPerguntaResposta.cs" />
     <Compile Include="Models\ViewResposta.cs" />
+    <Compile Include="Models\ViewSala.cs" />
     <Compile Include="Models\ViewTema.cs" />
     <Compile Include="Models\ViewUsuario.cs" />
     <Compile Include="Nivel.cs">
@@ -293,6 +297,15 @@
       <DependentUpon>JogoMaster.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Sala.cs">
+      <DependentUpon>JogoMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalaTemas.cs">
+      <DependentUpon>JogoMaster.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalaUsuarios.cs">
+      <DependentUpon>JogoMaster.tt</DependentUpon>
+    </Compile>
     <Compile Include="sysdiagrams.cs">
       <DependentUpon>JogoMaster.tt</DependentUpon>
     </Compile>

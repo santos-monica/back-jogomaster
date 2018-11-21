@@ -18,6 +18,7 @@ namespace JogoMaster
         public Nivel()
         {
             this.Pergunta = new HashSet<Pergunta>();
+            this.Sala = new HashSet<Sala>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace JogoMaster
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pergunta> Pergunta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Sala> Sala { get; set; }
     }
 }

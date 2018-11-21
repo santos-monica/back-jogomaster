@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JogoMaster.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -10,6 +11,8 @@ namespace JogoMaster.Controllers
 {
     public class Validacao : ApiController
     {
+        private JogoMasterEntities ctx;
+
         public void Refute(bool condition, string message = null)
         {
             if (condition) throw new Exception(message ?? "Condition failed.");
@@ -27,7 +30,5 @@ namespace JogoMaster.Controllers
                 return false;
             }
         }
-
-        
     }
 }

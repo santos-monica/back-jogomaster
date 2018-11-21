@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>teste 2</title>
+    <script src="./jquery-3.3.1.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        var uri = `ws://localhost:64803/api/Sala?UsuarioId=2`;
+        websocket = new WebSocket(uri);
+
+        websocket.onopen = function (event) {
+            console.log(event);
+            $('#messages').prepend('<div>Connected.</div>');
+        };
+        $('#chatform').submit(function (event) {
+            var sendJson = {
+                SalaId: $("#salaId").val()
+            }
+            websocket.send(JSON.stringify(sendJson));
+            $('#salaId').val('');
+            event.preventDefault();
+        });
+        
+        websocket.onerror = function (event) {
+            $('#messages').prepend('<div>ERROR</div>');
+        };
+        
+        websocket.onmessage = function (event) {
+            $('#messages').prepend('<div>' + event.data + '</div>');
+            var obj = JSON.parse(event.data);
+            if (obj.SalaCheia == true) {
+                $('#messages').prepend('<div>JOGAR!!</div>');
+            }
+        };
+    });
+    </script>
+</head>
+
+<body>
+    <form id="chatform" action="">
+        <label style="display:block" for="">Sala</label><input id="salaId" />
+        <button id="entrarSala" type="submit" style="width:200px;display:block">Submit</button>
+    </form>
+    <div id="messages" />
+</body>
+</html>

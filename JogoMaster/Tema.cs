@@ -18,6 +18,7 @@ namespace JogoMaster
         public Tema()
         {
             this.Pergunta = new HashSet<Pergunta>();
+            this.SalaTemas = new HashSet<SalaTemas>();
         }
     
         public int Id { get; set; }
@@ -27,5 +28,7 @@ namespace JogoMaster
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pergunta> Pergunta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalaTemas> SalaTemas { get; set; }
     }
 }

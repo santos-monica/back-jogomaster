@@ -6,6 +6,28 @@ namespace JogoMaster.Controllers
 {
     public partial class PerguntaController : Validacao
     {
+        private void ValidaDadosConsulta(ConsultaNivelTemas dados)
+        {
+            using (ctx = new JogoMasterEntities())
+            {
+                dados.idsTema.ForEach(idTema =>
+                {
+                    Refute(idTema <= 0, "Tema inválido.");
+
+                    Tema tema = null;
+                    tema = ctx.Temas
+                        .FirstOrDefault(x => x.Id == idTema);
+                    Refute(tema == null, "Tema inexistente.");
+                });
+
+                Nivel nivel = null;
+                nivel = ctx.Niveis.Where(x => x.Id == dados.idNivel)
+                    .FirstOrDefault();
+                Refute(nivel == null, "Nível inexistente.");
+                Refute(dados.idNivel <= 0, "Nível inválido.");
+            }
+        }
+
         private void ValidaPergunta(ViewPergunta dados)
         {
             Refute(dados.IdTema <= 0, "Informe o Tema da Pergunta.");

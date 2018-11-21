@@ -54,3 +54,22 @@ create table Administrador (
 	Email varchar(200) not null,
 	Senha varchar(200) not null,
 )
+create table Sala (
+	Id int primary key identity(1,1),
+	Nivel int not null foreign key references Nivel(id),
+	Criador int not null foreign key references Usuario(Id),
+	Jogadores int not null,
+	Ativa bit not null
+)
+
+create table SalaTemas (
+	Id int primary key identity(1,1),
+	SalaId int not null foreign key references Sala(Id),
+	TemaId int not null foreign key references Tema(Id),
+)
+
+create table SalaUsuarios (
+	Id int primary key identity(1,1),
+	SalaId int not null foreign key references Sala(Id),
+	UsuarioId int not null foreign key references Usuario(Id),
+)
