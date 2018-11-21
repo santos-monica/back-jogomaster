@@ -247,8 +247,10 @@
       <DependentUpon>RespostaController.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\SalaController.cs" />
-    <Compile Include="Controllers\SalaValidacao.cs" />
     <Compile Include="Controllers\RankingController.cs" />
+    <Compile Include="Controllers\SalaValidacao.cs">
+      <DependentUpon>SalaController.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\TemaController.cs" />
     <Compile Include="Controllers\TemaValidacao.cs">
       <DependentUpon>TemaController.cs</DependentUpon>
@@ -277,7 +279,6 @@
       <DependentUpon>JogoMaster.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Jogada.cs" />
-    <Compile Include="Models\Sala.cs" />
     <Compile Include="Models\ViewAdministrador.cs" />
     <Compile Include="Models\ViewClassificacao.cs" />
     <Compile Include="Models\ViewNivel.cs" />
