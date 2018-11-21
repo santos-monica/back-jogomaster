@@ -5,6 +5,7 @@ using System.Web.Http;
 
 namespace JogoMaster.Controllers
 {
+    [Authorize]
     public partial class TemaController
     {
         private JogoMasterEntities ctx;

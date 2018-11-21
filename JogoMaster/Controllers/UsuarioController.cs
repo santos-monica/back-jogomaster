@@ -5,6 +5,7 @@ using System.Web.Http;
 
 namespace JogoMaster.Controllers
 {
+    [Authorize]
     public partial class UsuarioController
     {
         private JogoMasterEntities ctx;
@@ -51,6 +52,7 @@ namespace JogoMaster.Controllers
             return Ok(usuario);
         }
 
+        [AllowAnonymous]
         public IHttpActionResult Post(ViewUsuario dados)
         {
             if (dados == null)
