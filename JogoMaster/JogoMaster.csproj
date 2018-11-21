@@ -248,7 +248,7 @@
     </Compile>
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Controllers\SalaValidacao.cs" />
-    <Compile Include="Controllers\ScoreController.cs" />
+    <Compile Include="Controllers\RankingController.cs" />
     <Compile Include="Controllers\TemaController.cs" />
     <Compile Include="Controllers\TemaValidacao.cs">
       <DependentUpon>TemaController.cs</DependentUpon>
