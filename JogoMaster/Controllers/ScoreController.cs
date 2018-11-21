@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace JogoMaster.Controllers
 {
+    [Authorize]
     public class ScoreController : ApiController
     {
         public HttpResponseMessage Get(string Username)

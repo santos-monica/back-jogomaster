@@ -1,4 +1,5 @@
 ﻿using JogoMaster.Models;
+using JogoMaster.Util;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,7 @@ namespace JogoMaster.Controllers
                     .FirstOrDefault(x => x.Email == dados.Email);
             }
             Refute(administrador != null, "E-mail já cadastrado.");
-            dados.Senha = MD5Hash(dados.Senha);
+            dados.Senha = Criptografia.MD5Hash(dados.Senha);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using JogoMaster.Util;
+using System.Linq;
 using System.Web.Http;
 
 namespace JogoMaster.Controllers
@@ -10,7 +11,7 @@ namespace JogoMaster.Controllers
         public IHttpActionResult Get(string Email, string Senha)
         {
             Administrador administradores = null;
-            var md5Senha = MD5Hash(Senha);
+            var md5Senha = Criptografia.MD5Hash(Senha);
 
             using (ctx = new JogoMasterEntities())
             {

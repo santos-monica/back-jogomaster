@@ -6,6 +6,7 @@ using System.Web.Http;
 
 namespace JogoMaster.Controllers
 {
+    [Authorize]
     public partial class PerguntaController
     {
         private JogoMasterEntities ctx;
