@@ -13,7 +13,7 @@ namespace JogoMaster.Controllers
     {
         private JogoMasterEntities ctx;
 
-        public void Refute(bool condition, string message = null, List<string> erros = null)
+        public void Refute(bool condition, string message = null)
         {
             //if (condition) erros.Add(message ?? "Condition failed.");
             if (condition) throw new Exception(message ?? "Condition failed.");

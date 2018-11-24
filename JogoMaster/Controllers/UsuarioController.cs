@@ -55,26 +55,28 @@ namespace JogoMaster.Controllers
         [AllowAnonymous]
         public IHttpActionResult Post(ViewUsuario dados)
         {
-
             //return BadRequest("errrrooou");
             if (dados == null)
                 return BadRequest("Dados inválidos.");
 
+            ValidaNovoUsuario(dados);
+            var usuario = new Usuario
+            {
+                Nome = dados.Nome,
+                Username = dados.Username,
+                Email = dados.Email,
+                Senha = dados.Senha,
+                Pontos = 0,
+                IdClassificacao = 1
+            };
+
             using (ctx = new JogoMasterEntities())
             {
-                ctx.Usuarios.Add(new Usuario()
-                {
-                    Nome = dados.Nome,
-                    Username = dados.Username,
-                    Email = dados.Email,
-                    Senha = dados.Senha,
-                    Pontos = 0,
-                    IdClassificacao = 1
-                });
+                ctx.Usuarios.Add(usuario);
                 ctx.SaveChanges();
             }
 
-            return Ok();
+            return Ok(usuario.Id);
         }
 
         public IHttpActionResult Put(ViewUsuario usuario)

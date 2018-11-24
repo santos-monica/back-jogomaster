@@ -31,11 +31,17 @@ namespace JogoMaster.Controllers
                 _usuario = usuario;
             }
 
+            public override void OnOpen()
+            {
+                partidaClients.Add(this);
+            }
+
             public override void OnMessage(string jogada)
             {
                 var novaJogada = serializer.Deserialize<Jogada>(jogada);
                 novaJogada.IdUsuario = _usuario;
-                partidaClients.Broadcast(serializer.Serialize(novaJogada));
+                var retorno = serializer.Serialize(novaJogada);
+                partidaClients.Broadcast(retorno);
             }
         }
     }

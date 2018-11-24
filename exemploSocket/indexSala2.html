@@ -7,16 +7,20 @@
     <script src="./jquery-3.3.1.min.js"></script>
     <script>
     $(document).ready(function () {
-        var uri = `ws://localhost:64803/api/Sala?UsuarioId=2`;
+        var uri = `ws://monica:64803/api/Partida?UsuarioId=2`;
         websocket = new WebSocket(uri);
 
         websocket.onopen = function (event) {
-            console.log(event);
             $('#messages').prepend('<div>Connected.</div>');
         };
         $('#chatform').submit(function (event) {
+            console.log($("#salaId").val());
+            console.log($("#userId").val());
+            console.log($("#temaId").val());
             var sendJson = {
-                SalaId: $("#salaId").val()
+                IdSala: $("#salaId").val(),
+                IdUsuario: $("#userId").val(),
+                IdTema: $("#temaId").val(),
             }
             websocket.send(JSON.stringify(sendJson));
             $('#salaId').val('');
@@ -27,7 +31,8 @@
             $('#messages').prepend('<div>ERROR</div>');
         };
         
-        websocket.onmessage = function (event) {
+        websocket.onmessage = event => {
+            console.log("message");
             $('#messages').prepend('<div>' + event.data + '</div>');
             var obj = JSON.parse(event.data);
             if (obj.SalaCheia == true) {
@@ -41,6 +46,8 @@
 <body>
     <form id="chatform" action="">
         <label style="display:block" for="">Sala</label><input id="salaId" />
+        <label style="display:block" for="">user</label><input id="userId" />
+        <label style="display:block" for="">tema</label><input id="temaId" />
         <button id="entrarSala" type="submit" style="width:200px;display:block">Submit</button>
     </form>
     <div id="messages" />

@@ -15,4 +15,10 @@ namespace JogoMaster.Models
         public int Pontos { get; set; }
         public int IdClassificacao { get; set; }
     }
+
+    public class ViewLogin
+    {
+        public string Username { get; set; }
+        public string Senha { get; set; }
+    }
 }

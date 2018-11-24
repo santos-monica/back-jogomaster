@@ -257,7 +257,7 @@
     <Compile Include="Controllers\ClassificacaoValidacao.cs">
       <DependentUpon>ClassificacaoController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\LoginAdminController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NivelController.cs" />
     <Compile Include="Controllers\NivelValidacao.cs">
       <DependentUpon>NivelController.cs</DependentUpon>
