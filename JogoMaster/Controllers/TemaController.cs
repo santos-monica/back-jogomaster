@@ -52,7 +52,7 @@ namespace JogoMaster.Controllers
             return Ok(tema);
         }
 
-        public IHttpActionResult Get(List<int> ids)
+        public IHttpActionResult Post(List<int> ids)
         {
             List<ViewTema> temas = new List<ViewTema>();
 
