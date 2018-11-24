@@ -10,7 +10,7 @@ create table Nivel (
 )
 
 create table Tema (
-	Id int not null primary key identity(1, 1),
+	Id int not null primary key,
 	Tema varchar(20) not null,
 	Icone varchar(20) not null,
 	Cor varchar(20) not null
@@ -48,12 +48,6 @@ create table Usuario (
 	IdClassificacao int not null foreign key references Classificacao(Id)
 )
 
-create table Administrador (
-	Id int not null primary key identity(1, 1),
-	Nome varchar(200) not null,
-	Email varchar(200) not null,
-	Senha varchar(200) not null,
-)
 create table Sala (
 	Id int primary key identity(1,1),
 	Nivel int not null foreign key references Nivel(id),
@@ -73,3 +67,19 @@ create table SalaUsuarios (
 	SalaId int not null foreign key references Sala(Id),
 	UsuarioId int not null foreign key references Usuario(Id),
 )
+go
+
+insert into Nivel values 
+('Fácil'),
+('Médio'),
+('Difícil'),
+('Master')
+
+insert into Tema values 
+(301,'Culinária','icon', 'cor'),
+(401,'Biologia','icon', 'cor'),
+(501,'Harry Potter','icon', 'cor'),
+(601,'Tecnologia','icon', 'cor'),
+(701,'Games','icon', 'cor'),
+(801,'História do Brasil','icon', 'cor'),
+(901,'Lógica','icon', 'cor')
