@@ -44,6 +44,7 @@ namespace JogoMaster.Controllers
                         Criador = ctx.Usuarios.Where(x => x.Id == sala.Criador).Select(x => x.Username).FirstOrDefault(),
                         Jogadores = teste.ToList(),
                         Id = sala.Id,
+                        IdNivel = sala.Nivel,
                         JogadoresNaSala = teste.Count(),
                         MaximoJogadores = sala.Jogadores
                     });
@@ -69,38 +70,80 @@ namespace JogoMaster.Controllers
             public SalaWebSocketHandler(int usuario)
             {
                 _usuario = usuario;
+
             }
 
             public override void OnOpen()
             {
                 salaClients.Add(this);
+
+
             }
 
             public override void OnMessage(string jogador)
             {
-                var novoJogador = serializer.Deserialize<CriacaoSala>(jogador);
-                novoJogador.UsuarioId = _usuario;
-                var helper = new SalaController();
-                helper.ValidaDadosSala(novoJogador);
-
-                if (novoJogador.NovaSala)
+                if (jogador == "getsalas")
                 {
-                    helper.criaNovaSala(novoJogador, SalaPartidaMaster);
+                    var salas = new List<ViewSala>();
+
+                    using (ctx = new JogoMasterEntities())
+                    {
+                        var bancosalas = ctx.Salas
+                            .Where(s => s.Ativa == true)
+                            .ToList();
+
+                        bancosalas.ForEach(sala =>
+                        {
+                            var jogadoresSala = ctx.SalasUsuarios.Where(s => s.SalaId == sala.Id).Select(s => s.UsuarioId).ToList();
+
+                            var teste = from sa in ctx.SalasUsuarios
+                                        join u in ctx.Usuarios on sa.UsuarioId equals u.Id
+                                        where sa.SalaId == sala.Id
+                                        select u.Username;
+
+                            salas.Add(new ViewSala
+                            {
+                                Criador = ctx.Usuarios.Where(x => x.Id == sala.Criador).Select(x => x.Username).FirstOrDefault(),
+                                Jogadores = teste.ToList(),
+                                Id = sala.Id,
+                                IdNivel = sala.Nivel,
+                                JogadoresNaSala = teste.Count(),
+                                MaximoJogadores = sala.Jogadores
+                            });
+                        });
+                    }
+
+                    if (salas.Count == 0) return;
+
+                    var retorno = serializer.Serialize(salas);
+                    salaClients.Broadcast(retorno);
                 }
                 else
                 {
-                    helper.buscaDadosSala(novoJogador, SalaPartidaMaster);
-                }
+                    var novoJogador = serializer.Deserialize<CriacaoSala>(jogador);
+                    novoJogador.UsuarioId = _usuario;
+                    var helper = new SalaController();
+                    helper.ValidaDadosSala(novoJogador);
 
-                helper.adicionaNovoJogador(novoJogador.SalaId, novoJogador.UsuarioId, SalaPartidaMaster);
+                    if (novoJogador.NovaSala)
+                    {
+                        helper.criaNovaSala(novoJogador, SalaPartidaMaster);
+                    }
+                    else
+                    {
+                        helper.buscaDadosSala(novoJogador, SalaPartidaMaster);
+                    }
+
+                    helper.adicionaNovoJogador(novoJogador.SalaId, novoJogador.UsuarioId, SalaPartidaMaster);
              
-                if (SalaPartidaMaster.JogadoresNaSala == SalaPartidaMaster.TotalJogadores)
-                {
-                    SalaPartidaMaster.SalaCheia = true;
-                }
+                    if (SalaPartidaMaster.JogadoresNaSala == SalaPartidaMaster.TotalJogadores)
+                    {
+                        SalaPartidaMaster.SalaCheia = true;
+                    }
 
-                var salaAtualizada = serializer.Serialize(SalaPartidaMaster);
-                salaClients.Broadcast(salaAtualizada);
+                    var salaAtualizada = serializer.Serialize(SalaPartidaMaster);
+                    salaClients.Broadcast(salaAtualizada);
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ namespace JogoMaster.Models
     {
         public int Id { get; set; }
         public string Criador { get; set; }
+        public int IdNivel { get; set; }
         public List<string> Jogadores { get; set; }
         public int JogadoresNaSala { get; set; }
         public int MaximoJogadores { get; set; }
