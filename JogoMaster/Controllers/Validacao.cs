@@ -15,8 +15,8 @@ namespace JogoMaster.Controllers
 
         public void Refute(bool condition, string message = null, List<string> erros = null)
         {
-            if (condition) erros.Add(message ?? "Condition failed.");
-            //if (condition) throw new Exception(message ?? "Condition failed.");
+            //if (condition) erros.Add(message ?? "Condition failed.");
+            if (condition) throw new Exception(message ?? "Condition failed.");
         }
 
         public bool IsValidEmail(string email)

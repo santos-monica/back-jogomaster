@@ -12,4 +12,15 @@ namespace JogoMaster.Models
         public string Icone { get; set; }
         public string Cor { get; set; }
     }
+
+    public class ListaIds
+    {
+        public List<int> ids { get; set; }
+
+        public ListaIds() {
+
+            ids = new List<int>();
+        }
+    }
+
 }

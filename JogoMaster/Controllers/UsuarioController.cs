@@ -56,7 +56,7 @@ namespace JogoMaster.Controllers
         public IHttpActionResult Post(ViewUsuario dados)
         {
 
-            return BadRequest("errrrooou");
+            //return BadRequest("errrrooou");
             if (dados == null)
                 return BadRequest("Dados inválidos.");
 

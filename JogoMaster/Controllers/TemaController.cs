@@ -52,13 +52,14 @@ namespace JogoMaster.Controllers
             return Ok(tema);
         }
 
-        public IHttpActionResult Post(List<int> ids)
+        [Route("api/buscarTemas")]
+        public IHttpActionResult Post(ListaIds lista)
         {
             List<ViewTema> temas = new List<ViewTema>();
 
             using (ctx = new JogoMasterEntities())
             {
-                ids.ForEach(id =>
+                lista.ids.ForEach(id =>
                 {
                     var tema = ctx.Temas.Where(t => t.Id == id).Select(t => new ViewTema
                     {
