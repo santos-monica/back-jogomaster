@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace JogoMaster.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class RankingController : ApiController
     {
         private JogoMasterEntities ctx;

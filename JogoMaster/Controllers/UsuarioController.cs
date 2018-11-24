@@ -5,7 +5,7 @@ using System.Web.Http;
 
 namespace JogoMaster.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public partial class UsuarioController
     {
         private JogoMasterEntities ctx;
@@ -55,6 +55,8 @@ namespace JogoMaster.Controllers
         [AllowAnonymous]
         public IHttpActionResult Post(ViewUsuario dados)
         {
+
+            return BadRequest("errrrooou");
             if (dados == null)
                 return BadRequest("Dados inválidos.");
 
@@ -63,10 +65,11 @@ namespace JogoMaster.Controllers
                 ctx.Usuarios.Add(new Usuario()
                 {
                     Nome = dados.Nome,
+                    Username = dados.Username,
                     Email = dados.Email,
                     Senha = dados.Senha,
-                    Pontos = dados.Pontos,
-                    IdClassificacao = dados.IdClassificacao
+                    Pontos = 0,
+                    IdClassificacao = 1
                 });
                 ctx.SaveChanges();
             }

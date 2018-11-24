@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace JogoMaster.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public partial class PerguntaController
     {
         private JogoMasterEntities ctx;
@@ -155,6 +155,7 @@ namespace JogoMaster.Controllers
 
         public IHttpActionResult Post(ListViewPerguntaResposta dados)
         {
+            var erros = new List<string>();
             if (dados == null || !dados.lista.Any())
             {
                 return BadRequest("Dados inválidos.");
@@ -162,8 +163,8 @@ namespace JogoMaster.Controllers
 
             dados.lista.ForEach(item =>
             {
-                ValidaPergunta(item.pergunta);
-                ValidaResposta(item.respostas);
+                ValidaPergunta(item.pergunta, erros);
+                ValidaResposta(item.respostas, erros);
 
                 var pergunta_add = new Pergunta
                 {

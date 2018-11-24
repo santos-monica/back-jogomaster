@@ -5,7 +5,7 @@ using System.Web.Http;
 
 namespace JogoMaster.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public partial class NivelController
     {
         private JogoMasterEntities ctx;

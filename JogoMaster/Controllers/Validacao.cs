@@ -13,9 +13,10 @@ namespace JogoMaster.Controllers
     {
         private JogoMasterEntities ctx;
 
-        public void Refute(bool condition, string message = null)
+        public void Refute(bool condition, string message = null, List<string> erros = null)
         {
-            if (condition) throw new Exception(message ?? "Condition failed.");
+            if (condition) erros.Add(message ?? "Condition failed.");
+            //if (condition) throw new Exception(message ?? "Condition failed.");
         }
 
         public bool IsValidEmail(string email)

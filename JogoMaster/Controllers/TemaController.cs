@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace JogoMaster.Controllers
 {
     //[Authorize]
+    [EnableCors(origins:"*", headers: "*", methods: "*")]
     public partial class TemaController
     {
         private JogoMasterEntities ctx;
@@ -48,6 +50,30 @@ namespace JogoMaster.Controllers
             if (tema == null) return NotFound();
 
             return Ok(tema);
+        }
+
+        public IHttpActionResult Get(List<int> ids)
+        {
+            List<ViewTema> temas = new List<ViewTema>();
+
+            using (ctx = new JogoMasterEntities())
+            {
+                ids.ForEach(id =>
+                {
+                    var tema = ctx.Temas.Where(t => t.Id == id).Select(t => new ViewTema
+                    {
+                        Id = t.Id,
+                        Tema = t.Tema1,
+                        Cor = t.Cor,
+                        Icone = t.Icone
+                    }
+                    ).FirstOrDefault();
+
+                    temas.Add(tema);
+                });
+            }
+
+            return Ok(temas);
         }
 
         public IHttpActionResult Post(ViewTema dados)
