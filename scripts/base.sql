@@ -44,7 +44,7 @@ create table Usuario (
 	Username varchar(200) not null,
 	Email varchar(200) not null,
 	Senha varchar(200) not null,
-	Skin varchar(100) not null,
+	Skin varchar(100) not null default('default.png'),
 	Pontos int not null default(0),
 	Cadastrado bit not null default(0),
 	IdClassificacao int not null foreign key references Classificacao(Id)
@@ -72,20 +72,20 @@ create table SalaUsuarios (
 go
 
 insert into Nivel values 
-('Fácil'),
-('Intermediário'),
-('Difícil'),
+('FÃ¡cil'),
+('IntermediÃ¡rio'),
+('DifÃ­cil'),
 ('Master')
 go
 
 insert into Tema values 
-(301,'Culinária','icon', '#000000'),
+(301,'CulinÃ¡ria','icon', '#000000'),
 (401,'Biologia','dna.png', '#00FF00'),
 (501,'Harry Potter','harry-potter.png', '#FF7F00'),
 (601,'Tecnologia','innovation.png', '#FF0000'),
 (701,'Games','game-controller.png', '#FF6EC7'),
-(801,'História do Brasil','cristo-redentor.png', '#0000FF'),
-(901,'Lógica','icon', '#000000')
+(801,'HistÃ³ria do Brasil','cristo-redentor.png', '#0000FF'),
+(901,'LÃ³gica','icon', '#000000')
 go
 
 
@@ -95,6 +95,6 @@ insert into Classificacao values
 ('Pequeno Gafanhoto', 5000, 19999),
 ('Gafanhoto', 20000, 49999),
 ('Manjador', 50000, 249999),
-('Sabixão', 250000, 799999),
+('SabixÃ£o', 250000, 799999),
 ('Especialista', 800000, 1499999),
-('Mestrão', 1500000, 1000000000)
+('MestrÃ£o', 1500000, 1000000000)
