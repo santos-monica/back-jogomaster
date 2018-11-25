@@ -323,7 +323,6 @@
     <Compile Include="Resposta.cs">
       <DependentUpon>JogoMaster.tt</DependentUpon>
     </Compile>
-    <Compile Include="Startup.cs" />
     <Compile Include="Sala.cs">
       <DependentUpon>JogoMaster.tt</DependentUpon>
     </Compile>
@@ -333,9 +332,7 @@
     <Compile Include="SalaUsuarios.cs">
       <DependentUpon>JogoMaster.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>JogoMaster.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Startup.cs" />
     <Compile Include="Tema.cs">
       <DependentUpon>JogoMaster.tt</DependentUpon>
     </Compile>

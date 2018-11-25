@@ -33,7 +33,6 @@ namespace JogoMaster
         public virtual DbSet<Sala> Salas { get; set; }
         public virtual DbSet<SalaTemas> SalasTemas { get; set; }
         public virtual DbSet<SalaUsuarios> SalasUsuarios { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tema> Temas { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
     }

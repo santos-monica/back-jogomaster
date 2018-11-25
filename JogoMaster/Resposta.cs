@@ -16,8 +16,8 @@ namespace JogoMaster
     {
         public int Id { get; set; }
         public bool Correta { get; set; }
-        public int IdPergunta { get; set; }
         public string Resposta1 { get; set; }
+        public int IdPergunta { get; set; }
     
         public virtual Pergunta Pergunta { get; set; }
     }

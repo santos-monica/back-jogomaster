@@ -61,18 +61,18 @@ namespace JogoMaster.Controllers
 
         public void criaNovaSala(CriacaoSala dados, SalaPartida SalaPartidaMaster)
         {
-            SalaPartidaMaster.CriadorSala = dados.UsuarioId;
-            SalaPartidaMaster.Nivel = dados.NivelId;
+            SalaPartidaMaster.Criador = dados.UsuarioId;
+            SalaPartidaMaster.IdNivel = dados.NivelId;
             SalaPartidaMaster.Temas = dados.TemasIds;
-            SalaPartidaMaster.TotalJogadores = dados.Jogadores;
+            SalaPartidaMaster.MaximoJogadores = dados.Jogadores;
 
             using (ctx = new JogoMasterEntities())
             {
                 var sala = ctx.Salas.Add(new Sala
                 {
-                    Nivel = SalaPartidaMaster.Nivel,
-                    Criador = SalaPartidaMaster.CriadorSala,
-                    Jogadores = SalaPartidaMaster.TotalJogadores,
+                    Nivel = SalaPartidaMaster.IdNivel,
+                    Criador = SalaPartidaMaster.Criador,
+                    Jogadores = SalaPartidaMaster.MaximoJogadores,
                     Ativa = true
                 });
 
@@ -87,14 +87,14 @@ namespace JogoMaster.Controllers
 
                 ctx.SaveChanges();
                 dados.SalaId = sala.Id;
-                SalaPartidaMaster.SalaId = sala.Id;
+                SalaPartidaMaster.Id = sala.Id;
             }
         }
 
         public void adicionaNovoJogador(int salaId, int usuarioId, SalaPartida SalaPartidaMaster)
         {
             SalaPartidaMaster.JogadoresNaSala++;
-            SalaPartidaMaster.Usuarios.Add(usuarioId);
+            SalaPartidaMaster.Jogadores.Add(usuarioId);
 
             using (ctx = new JogoMasterEntities())
             {
@@ -111,14 +111,14 @@ namespace JogoMaster.Controllers
         {
             using (ctx = new JogoMasterEntities())
             {
-                SalaPartidaMaster.SalaId = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Id).FirstOrDefault();
-                SalaPartidaMaster.CriadorSala = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Criador).FirstOrDefault();
-                SalaPartidaMaster.Usuarios = ctx.SalasUsuarios.Where(x => x.SalaId == novoJogador.SalaId).Select(x => x.UsuarioId).ToList();
-                SalaPartidaMaster.TotalJogadores = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Jogadores).FirstOrDefault();
-                SalaPartidaMaster.JogadoresNaSala = SalaPartidaMaster.Usuarios.Count;
+                SalaPartidaMaster.Id = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Id).FirstOrDefault();
+                SalaPartidaMaster.Criador = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Criador).FirstOrDefault();
+                SalaPartidaMaster.Jogadores = ctx.SalasUsuarios.Where(x => x.SalaId == novoJogador.SalaId).Select(x => x.UsuarioId).ToList();
+                SalaPartidaMaster.MaximoJogadores = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Jogadores).FirstOrDefault();
+                SalaPartidaMaster.JogadoresNaSala = SalaPartidaMaster.Jogadores.Count;
                 SalaPartidaMaster.Temas = ctx.SalasTemas.Where(x => x.SalaId == novoJogador.SalaId).Select(x => x.TemaId).ToList();
-                SalaPartidaMaster.Nivel = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Nivel).FirstOrDefault();
-                SalaPartidaMaster.SalaCheia = SalaPartidaMaster.JogadoresNaSala < SalaPartidaMaster.TotalJogadores ? false : true;
+                SalaPartidaMaster.IdNivel = ctx.Salas.Where(x => x.Id == novoJogador.SalaId).Select(x => x.Nivel).FirstOrDefault();
+                SalaPartidaMaster.SalaCheia = SalaPartidaMaster.JogadoresNaSala < SalaPartidaMaster.MaximoJogadores ? false : true;
             }
         }
 

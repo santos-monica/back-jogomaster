@@ -111,8 +111,8 @@ namespace JogoMaster.Controllers
             {
                 dados.idsTema.ForEach(tema =>
                 {
-                    var perguntasBanco = ctx.Perguntas
-                    .Where(x => x.IdNivel == dados.idNivel && x.IdTema == tema)
+                    var perguntasPatrocinadasBanco = ctx.Perguntas
+                    .Where(x => x.IdNivel == dados.idNivel && x.IdTema == tema && x.Patrocinada == true)
                     .Select(x => new ViewPergunta()
                     {
                         Id = x.Id,
@@ -122,32 +122,44 @@ namespace JogoMaster.Controllers
                         Patrocinada = x.Patrocinada
                     }).ToList();
 
-                    if (perguntasBanco.Any())
+
+                    perguntas = perguntasPatrocinadasBanco.OrderBy(x => rnd.Next()).Take(1).ToList();
+
+                    var perguntasBanco = ctx.Perguntas
+                    .Where(x => x.IdNivel == dados.idNivel && x.IdTema == tema && x.Patrocinada == false)
+                    .Select(x => new ViewPergunta()
                     {
-                        perguntas = perguntasBanco.OrderBy(x => rnd.Next()).Take(4).ToList();
+                        Id = x.Id,
+                        Pergunta = x.Pergunta1,
+                        IdNivel = x.IdNivel,
+                        IdTema = x.IdTema,
+                        Patrocinada = x.Patrocinada
+                    }).ToList();
 
-                        perguntas.ForEach(pergunta =>
+                    perguntas = perguntasBanco.OrderBy(x => rnd.Next()).Take(3).ToList();
+
+                    perguntas.ForEach(pergunta =>
+                    {
+                        var res = ctx.Respostas
+                        .Where(x => x.IdPergunta == pergunta.Id)
+                        .Select(x => new ViewResposta()
                         {
-                            var res = ctx.Respostas
-                            .Where(x => x.IdPergunta == pergunta.Id)
-                            .Select(x => new ViewResposta()
-                            {
-                                Id = x.Id,
-                                Correta = x.Correta,
-                                Resposta = x.Resposta1,
-                                IdPergunta = x.IdPergunta
-                            })
-                            .ToList();
+                            Id = x.Id,
+                            Correta = x.Correta,
+                            Resposta = x.Resposta1,
+                            IdPergunta = x.IdPergunta
+                        })
+                        .ToList();
 
-                            var perRes = new ViewPerguntaResposta
-                            {
-                                pergunta = pergunta,
-                                respostas = res
-                            };
+                        var perRes = new ViewPerguntaResposta
+                        {
+                            pergunta = pergunta,
+                            respostas = res
+                        };
 
-                            retorno.lista.Add(perRes);
-                        });
-                    }
+                        retorno.lista.Add(perRes);
+                    });
+                    
                 });
             }
             return Ok(retorno.lista);

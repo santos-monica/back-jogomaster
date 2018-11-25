@@ -8,9 +8,10 @@ namespace JogoMaster.Models
     public class ViewSala
     {
         public int Id { get; set; }
-        public string Criador { get; set; }
+        public int Criador { get; set; }
         public int IdNivel { get; set; }
-        public List<string> Jogadores { get; set; }
+        public List<int> Jogadores { get; set; }
+        public List<int> Temas { get; set; }
         public int JogadoresNaSala { get; set; }
         public int MaximoJogadores { get; set; }
     }
@@ -38,18 +39,18 @@ namespace JogoMaster.Models
 
     public class SalaPartida
     {
-        public int SalaId { get; set; }
-        public int CriadorSala { get; set; }
-        public List<int> Usuarios { get; set; }
-        public int TotalJogadores { get; set; }
+        public int Id { get; set; }
+        public int Criador { get; set; }
+        public List<int> Jogadores { get; set; }
+        public int MaximoJogadores { get; set; }
         public int JogadoresNaSala { get; set; }
         public List<int> Temas { get; set; }
-        public int Nivel { get; set; }
+        public int IdNivel { get; set; }
         public bool SalaCheia { get; set; }
 
         public SalaPartida()
         {
-            Usuarios = new List<int>();
+            Jogadores = new List<int>();
             Temas = new List<int>();
             SalaCheia = false;
             JogadoresNaSala = 0;

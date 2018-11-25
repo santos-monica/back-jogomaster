@@ -22,6 +22,9 @@ namespace JogoMaster.Controllers
                     Nome = s.Nome,
                     Email = s.Email,
                     Senha = s.Senha,
+                    Skin = s.Skin,
+                    Username = s.Username,
+                    IdClassificacao = s.IdClassificacao,
                     Pontos = s.Pontos
                 }).ToList();
             }
@@ -43,6 +46,9 @@ namespace JogoMaster.Controllers
                     Nome = s.Nome,
                     Email = s.Email,
                     Senha = s.Senha,
+                    Skin = s.Skin,
+                    Username = s.Username,
+                    IdClassificacao = s.IdClassificacao,
                     Pontos = s.Pontos
                 }).FirstOrDefault();
             }
@@ -55,7 +61,6 @@ namespace JogoMaster.Controllers
         [AllowAnonymous]
         public IHttpActionResult Post(ViewUsuario dados)
         {
-            //return BadRequest("errrrooou");
             if (dados == null)
                 return BadRequest("Dados inválidos.");
 
@@ -67,7 +72,9 @@ namespace JogoMaster.Controllers
                 Email = dados.Email,
                 Senha = dados.Senha,
                 Pontos = 0,
-                IdClassificacao = 1
+                Cadastrado = dados.Cadastrado,
+                Skin = dados.Skin,
+                IdClassificacao = 1,   
             };
 
             using (ctx = new JogoMasterEntities())
@@ -94,6 +101,8 @@ namespace JogoMaster.Controllers
                     UsuarioAtual.Nome = usuario.Nome;
                     UsuarioAtual.Email = usuario.Email;
                     UsuarioAtual.Senha = usuario.Senha;
+                    UsuarioAtual.Username = usuario.Username;
+                    UsuarioAtual.Skin = usuario.Skin;
                     UsuarioAtual.Pontos = usuario.Pontos;
                     UsuarioAtual.IdClassificacao = usuario.IdClassificacao;
                     ctx.SaveChanges();

@@ -12,7 +12,9 @@ namespace JogoMaster.Models
         public string Username { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
+        public string Skin { get; set; }
         public int Pontos { get; set; }
+        public bool Cadastrado { get; set; }
         public int IdClassificacao { get; set; }
     }
 

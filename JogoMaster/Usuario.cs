@@ -28,6 +28,8 @@ namespace JogoMaster
         public string Senha { get; set; }
         public int Pontos { get; set; }
         public int IdClassificacao { get; set; }
+        public string Skin { get; set; }
+        public bool Cadastrado { get; set; }
     
         public virtual Classificacao Classificacao { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
