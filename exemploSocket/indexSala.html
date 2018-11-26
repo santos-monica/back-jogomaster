@@ -7,7 +7,7 @@
     <script src="./jquery-3.3.1.min.js"></script>
     <script>
         $(document).ready(function () {
-            var uri = `ws://monica:64803/api/Sala?UsuarioId=1`;
+            var uri = `ws://monica:64803/api/Sala?UsuarioId=41`;
             websocket = new WebSocket(uri);
             console.log(websocket);
             websocket.onopen = function (event) {
@@ -16,10 +16,11 @@
                 
                 $('#criarSala').on("click", function (event) {
                     var sendJson = {
-                        NivelId:1,
-                        TemasIds:[401,501,601,701,801],
-                        Jogadores:2,
-                        NovaSala: true
+                        // NivelId:1,
+                        // TemasIds:[401,501,601,701,801],
+                        // Jogadores:2,
+                        SalaId: 67, 
+                        NovaSala: false
                     }
                     websocket.send(JSON.stringify(sendJson));
                     event.preventDefault();

@@ -101,6 +101,13 @@ namespace JogoMaster.Controllers
                     if (SalaPartidaMaster.JogadoresNaSala == SalaPartidaMaster.MaximoJogadores)
                     {
                         SalaPartidaMaster.SalaCheia = true;
+                        using(ctx = new JogoMasterEntities())
+                        {
+                            var sala = new Sala() { Id = SalaPartidaMaster.Id, Ativa = false };
+                            ctx.Salas.Attach(sala);
+                            ctx.Entry(sala).Property(x => x.Ativa).IsModified = true;
+                            ctx.SaveChanges(); 
+                        };
                     }
 
                     var salaAtualizada = serializer.Serialize(SalaPartidaMaster);
