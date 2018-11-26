@@ -25,7 +25,9 @@ namespace JogoMaster.Controllers
                     Skin = s.Skin,
                     Username = s.Username,
                     IdClassificacao = s.IdClassificacao,
-                    Pontos = s.Pontos
+                    Classificacao = ctx.Classificacoes.Where(c => c.Id == s.IdClassificacao).FirstOrDefault().Classificacao1,
+                    Pontos = s.Pontos,
+                    Cadastrado = s.Cadastrado
                 }).ToList();
             }
 
@@ -49,8 +51,12 @@ namespace JogoMaster.Controllers
                     Skin = s.Skin,
                     Username = s.Username,
                     IdClassificacao = s.IdClassificacao,
-                    Pontos = s.Pontos
+                    Classificacao = ctx.Classificacoes.Where(c => c.Id == s.IdClassificacao).FirstOrDefault().Classificacao1,
+                    Pontos = s.Pontos,
+                    Cadastrado = s.Cadastrado
                 }).FirstOrDefault();
+
+
             }
 
             if (usuario == null) return NotFound();
@@ -64,7 +70,14 @@ namespace JogoMaster.Controllers
             if (dados == null)
                 return BadRequest("Dados inválidos.");
 
-            ValidaNovoUsuario(dados);
+            if(dados.Cadastrado == false)
+            {
+                ValidaUsuarioPadrao(dados);
+            } else
+            {
+                ValidaNovoUsuario(dados);
+            }
+
             var usuario = new Usuario
             {
                 Nome = dados.Nome,
@@ -91,6 +104,8 @@ namespace JogoMaster.Controllers
             if (usuario == null)
                 return BadRequest("Dados inválidos.");
 
+
+
             using (ctx = new JogoMasterEntities())
             {
                 var UsuarioAtual = ctx.Usuarios.Where(t => t.Id == usuario.Id)
@@ -104,7 +119,8 @@ namespace JogoMaster.Controllers
                     UsuarioAtual.Username = usuario.Username;
                     UsuarioAtual.Skin = usuario.Skin;
                     UsuarioAtual.Pontos = usuario.Pontos;
-                    UsuarioAtual.IdClassificacao = usuario.IdClassificacao;
+                    UsuarioAtual.Cadastrado = usuario.Cadastrado;
+                    UsuarioAtual.IdClassificacao = ctx.Classificacoes.Where(c => c.PontuacaoMinima <= usuario.Pontos && c.PontuacaoMaxima >= usuario.Pontos).FirstOrDefault().Id;
                     ctx.SaveChanges();
                 }
                 else

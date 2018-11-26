@@ -111,20 +111,7 @@ namespace JogoMaster.Controllers
             {
                 dados.idsTema.ForEach(tema =>
                 {
-                    var perguntasPatrocinadasBanco = ctx.Perguntas
-                    .Where(x => x.IdNivel == dados.idNivel && x.IdTema == tema && x.Patrocinada == true)
-                    .Select(x => new ViewPergunta()
-                    {
-                        Id = x.Id,
-                        Pergunta = x.Pergunta1,
-                        IdNivel = x.IdNivel,
-                        IdTema = x.IdTema,
-                        Patrocinada = x.Patrocinada
-                    }).ToList();
-
-
-                    perguntas = perguntasPatrocinadasBanco.OrderBy(x => rnd.Next()).Take(1).ToList();
-
+                    
                     var perguntasBanco = ctx.Perguntas
                     .Where(x => x.IdNivel == dados.idNivel && x.IdTema == tema && x.Patrocinada == false)
                     .Select(x => new ViewPergunta()
@@ -136,7 +123,7 @@ namespace JogoMaster.Controllers
                         Patrocinada = x.Patrocinada
                     }).ToList();
 
-                    perguntas = perguntasBanco.OrderBy(x => rnd.Next()).Take(3).ToList();
+                    perguntas = perguntasBanco.OrderBy(x => rnd.Next()).Take(4).ToList();
 
                     perguntas.ForEach(pergunta =>
                     {

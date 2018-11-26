@@ -26,6 +26,7 @@ namespace JogoMaster.Controllers
                     IdUsuario = s.Id,
                     Username = s.Username,
                     PontosJogada = s.Pontos,
+                    Cadastrado = s.Cadastrado,
                     Skin = s.Skin
                 }).
                 OrderByDescending(x => x.PontosJogada)
@@ -52,14 +53,15 @@ namespace JogoMaster.Controllers
                     IdUsuario = x.Id,
                     PontosJogada = x.Pontos,
                     Username = x.Username,
-                    Skin = x.Skin
+                    Cadastrado = x.Cadastrado,
+                    Skin = x.Skin,
+                    
                 }).FirstOrDefault();
 
                 ranking.usuario.Classificacao = ctx.Classificacoes
                     .Where(c => ranking.usuario.PontosJogada >= c.PontuacaoMinima && ranking.usuario.PontosJogada <= c.PontuacaoMaxima)
                     .Select(s => s.Classificacao1)
                     .FirstOrDefault();
-
             }
             
             return Ok(ranking);

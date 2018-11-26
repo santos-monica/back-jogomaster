@@ -16,6 +16,7 @@ namespace JogoMaster.Models
         public int Pontos { get; set; }
         public bool Cadastrado { get; set; }
         public int IdClassificacao { get; set; }
+        public string Classificacao { get; set; }
     }
 
     public class ViewLogin
