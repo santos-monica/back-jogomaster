@@ -1,4 +1,5 @@
 ﻿using JogoMaster.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JogoMaster.Controllers
@@ -19,43 +20,43 @@ namespace JogoMaster.Controllers
             }
         }
 
-        public void ValidaDadosSala(CriacaoSala dados)
+        public void ValidaDadosSala(CriacaoSala dados, List<string> erros)
         {
-            Refute(dados.UsuarioId <= 0, "Usuário inválido");
+            if (dados.UsuarioId <= 0) erros.Add("Usuário inválido");
 
             using (ctx = new JogoMasterEntities())
             {
                 if (dados.NovaSala)
                 {
-                    Refute(dados.NivelId <= 0, "Nível inválido");
-                    Refute(dados.TemasIds.Count != 5, "Quantidade de temas inválida");
-                    Refute(dados.Jogadores < 2 || dados.Jogadores > 4, "Quantidade de jogadores inválida");
+                    if(dados.NivelId <= 0) erros.Add("Nível inválido");
+                    if(dados.TemasIds.Count != 5) erros.Add("Quantidade de temas inválida");
+                    if(dados.Jogadores < 2 || dados.Jogadores > 4) erros.Add("Quantidade de jogadores inválida");
                     dados.TemasIds.ForEach(tema =>
                     {
                         Tema Tema = null;
                         Tema = ctx.Temas
                             .FirstOrDefault(x => x.Id == tema);
-                        Refute(Tema == null, $"Tema {tema} inexistente.");
+                        if(Tema == null) erros.Add($"Tema {tema} inexistente.");
                     });
 
                     Nivel Nivel = null;
                     Nivel = ctx.Niveis
                         .FirstOrDefault(x => x.Id == dados.NivelId);
-                    Refute(Nivel == null, $"Nível {dados.NivelId} inexistente.");
+                    if(Nivel == null) erros.Add($"Nível {dados.NivelId} inexistente.");
                 }
                 else
                 {
-                    Refute(dados.SalaId <= 0, "Sala inválida");
+                    if(dados.SalaId <= 0) erros.Add("Sala inválida");
                     Sala Sala = null;
                     Sala = ctx.Salas
                         .FirstOrDefault(x => x.Id == dados.SalaId);
-                    Refute(Sala == null, $"Sala {dados.SalaId} inexistente.");
+                    if(Sala == null) erros.Add($"Sala {dados.SalaId} inexistente.");
                 }
 
                 Usuario Usuario = null;
                 Usuario = ctx.Usuarios
                     .FirstOrDefault(x => x.Id == dados.UsuarioId);
-                Refute(Usuario == null, $"Usuário {dados.UsuarioId} inexistente.");
+                if(Usuario == null) erros.Add($"Usuário {dados.UsuarioId} inexistente.");
             }
         }
 
@@ -90,6 +91,19 @@ namespace JogoMaster.Controllers
                 SalaPartidaMaster.Id = sala.Id;
             }
         }
+        public bool JogadorEmNenhumaSala(int usuarioId)
+        {
+            using (ctx = new JogoMasterEntities())
+            {
+                var jogadorSemSala = (from s in ctx.Salas
+                                     join su in ctx.SalasUsuarios on s.Id equals su.SalaId
+                                     where su.UsuarioId == usuarioId && s.Ativa == true
+                                     select su.Id).FirstOrDefault();
+
+                return jogadorSemSala > 0 ? false : true;
+            }
+        }
+
 
         public void adicionaNovoJogador(int salaId, int usuarioId, SalaPartida SalaPartidaMaster)
         {
@@ -98,6 +112,7 @@ namespace JogoMaster.Controllers
 
             using (ctx = new JogoMasterEntities())
             {
+
                 ctx.SalasUsuarios.Add(new SalaUsuarios
                 {
                     SalaId = salaId,

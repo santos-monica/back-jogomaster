@@ -81,39 +81,51 @@ namespace JogoMaster.Controllers
 
             public override void OnMessage(string jogador)
             {
-                
-                    var novoJogador = serializer.Deserialize<CriacaoSala>(jogador);
-                    novoJogador.UsuarioId = _usuario;
-                    var helper = new SalaController();
-                    helper.ValidaDadosSala(novoJogador);
 
-                    if (novoJogador.NovaSala)
-                    {
-                        helper.criaNovaSala(novoJogador, SalaPartidaMaster);
-                    }
-                    else
-                    {
-                        helper.buscaDadosSala(novoJogador, SalaPartidaMaster);
-                    }
+                var novoJogador = serializer.Deserialize<CriacaoSala>(jogador);
+                novoJogador.UsuarioId = _usuario;
+                var helper = new SalaController();
+                var erros = new List<string>();
+                helper.ValidaDadosSala(novoJogador, erros);
+                if (erros.Any())
+                {
+                    var retorno = $"{{ \"erro\": \"{erros[0]}\", \"deuErro\": true}}";
+                    salaClients.Broadcast(retorno);
+                    return;
+                }
+                if (!helper.JogadorEmNenhumaSala(novoJogador.UsuarioId))
+                {
+                    salaClients.Broadcast("{ \"erro\": \"Jogador já está em uma sala\", \"deuErro\": true}");
+                    return;
+                };
 
-                    helper.adicionaNovoJogador(novoJogador.SalaId, novoJogador.UsuarioId, SalaPartidaMaster);
-             
-                    if (SalaPartidaMaster.JogadoresNaSala == SalaPartidaMaster.MaximoJogadores)
-                    {
-                        SalaPartidaMaster.SalaCheia = true;
-                        using(ctx = new JogoMasterEntities())
-                        {
-                            var sala = new Sala() { Id = SalaPartidaMaster.Id, Ativa = false };
-                            ctx.Salas.Attach(sala);
-                            ctx.Entry(sala).Property(x => x.Ativa).IsModified = true;
-                            ctx.SaveChanges(); 
-                        };
-                    }
+                if (novoJogador.NovaSala)
+                {
+                    helper.criaNovaSala(novoJogador, SalaPartidaMaster);
+                }
+                else
+                {
+                    helper.buscaDadosSala(novoJogador, SalaPartidaMaster);
+                }
 
-                    var salaAtualizada = serializer.Serialize(SalaPartidaMaster);
-                    salaClients.Broadcast(salaAtualizada);
-                
+                helper.adicionaNovoJogador(novoJogador.SalaId, novoJogador.UsuarioId, SalaPartidaMaster);
+
+                if (SalaPartidaMaster.JogadoresNaSala == SalaPartidaMaster.MaximoJogadores)
+                {
+                    SalaPartidaMaster.SalaCheia = true;
+                    using (ctx = new JogoMasterEntities())
+                    {
+                        var sala = new Sala() { Id = SalaPartidaMaster.Id, Ativa = false };
+                        ctx.Salas.Attach(sala);
+                        ctx.Entry(sala).Property(x => x.Ativa).IsModified = true;
+                        ctx.SaveChanges();
+                    };
+
+                }
+                var salaAtualizada = serializer.Serialize(SalaPartidaMaster);
+                salaClients.Broadcast(salaAtualizada);
             }
         }
+
     }
 }

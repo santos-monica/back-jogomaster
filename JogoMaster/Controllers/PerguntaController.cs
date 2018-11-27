@@ -101,7 +101,7 @@ namespace JogoMaster.Controllers
         [Route("api/buscarPerguntas")]
         public IHttpActionResult Post(ConsultaNivelTemas dados)
         {
-            var rnd = new Random(DateTime.Now.Millisecond);
+            //var rnd = new Random(DateTime.Now.Millisecond);
             var perguntas = new List<ViewPergunta>();
             var retorno = new ListViewPerguntaResposta();
 
@@ -113,7 +113,7 @@ namespace JogoMaster.Controllers
                 {
                     
                     var perguntasBanco = ctx.Perguntas
-                    .Where(x => x.IdNivel == dados.idNivel && x.IdTema == tema && x.Patrocinada == false)
+                    .Where(x => x.IdNivel == dados.idNivel && x.IdTema == tema)
                     .Select(x => new ViewPergunta()
                     {
                         Id = x.Id,
@@ -123,7 +123,7 @@ namespace JogoMaster.Controllers
                         Patrocinada = x.Patrocinada
                     }).ToList();
 
-                    perguntas = perguntasBanco.OrderBy(x => rnd.Next()).Take(4).ToList();
+                    perguntas = perguntasBanco.OrderBy(x => Guid.NewGuid()).Take(4).ToList();
 
                     perguntas.ForEach(pergunta =>
                     {
